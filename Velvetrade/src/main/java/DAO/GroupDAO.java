@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface GroupDAO {
 
-    public List<Group> getAllGroups();
+    public List<Group> searchByName(String search);
     public Group getGroupByID(String id);
     public int updateGroupByID(String id,Group group);
     public int deleteGroupByID(String id);
@@ -21,7 +21,7 @@ public interface GroupDAO {
 
 //    public int addToGroupByID(String groupId,String userId);
 //    public int changeGroupName(String groupID,String newName);
-//
+
 
 
 
