@@ -11,7 +11,7 @@ import java.io.IOException;
 @Service
 public class FirebaseInitializer {
     public void initializeFirebase() throws IOException {
-
+        //test
         FileInputStream serviceAccount =
                 new FileInputStream("./serviceAccountKey.json");
 
