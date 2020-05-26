@@ -2,6 +2,7 @@ package Service;
 
 import DAO.FakeUserDAO;
 import Model.User;
+import com.google.cloud.firestore.Firestore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -13,11 +14,13 @@ public class UserService {
     @Autowired
     public UserService(@Qualifier("UserDAO") FakeUserDAO fDAO) {
         this.fDAO = fDAO;
+
     }
 
 
     public int addNewUser(User user) {
         return fDAO.addNewUser(user);
+
     }
 
 
