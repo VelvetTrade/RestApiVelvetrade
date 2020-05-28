@@ -67,7 +67,7 @@ public class FakeUserDAO implements UserDAO {
 
     @Override
     public List<User> findUserByName(String name) {
-        
+
         return null;
     }
 }

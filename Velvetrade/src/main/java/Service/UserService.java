@@ -2,7 +2,6 @@ package Service;
 
 import DAO.FakeUserDAO;
 import Model.User;
-import com.google.cloud.firestore.Firestore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -24,8 +23,8 @@ public class UserService {
     }
 
 
-    public int updateUserByID(String id) {
-        return fDAO.updateUserByID(id);
+    public int updateUserByID(String id,User user) {
+        return fDAO.updateUserByID(id,user);
     }
 
 
