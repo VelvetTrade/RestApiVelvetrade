@@ -1,14 +1,13 @@
 package DAO;
 
+import Model.Posting;
 import Model.User;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -23,6 +22,25 @@ public class FakeUserDAO implements UserDAO {
             return 0;
         }
         return 1;
+    }
+
+    @Override
+    public List<Posting> getAllPostingsPerUser(String id) {
+
+        List<Posting> o=new ArrayList<>();
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+
+        try {
+            QuerySnapshot qs=dbFirestore.collectionGroup("Postings").whereEqualTo("userId",id).get().get();
+            o=qs.toObjects(Posting.class);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+        return o;
     }
 
     @Override
@@ -67,7 +85,19 @@ public class FakeUserDAO implements UserDAO {
 
     @Override
     public List<User> findUserByName(String name) {
-
-        return null;
+        CollectionReference cr=FirestoreClient.getFirestore().collection("Users");
+        Query q= cr.whereEqualTo("name",name);
+        ApiFuture<QuerySnapshot> a = q.get();
+        List<User> users=new ArrayList<>();
+        try {
+            for(DocumentSnapshot ds:a.get().getDocuments()){
+                users.add(ds.toObject(User.class));
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

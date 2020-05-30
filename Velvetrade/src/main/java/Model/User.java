@@ -14,7 +14,10 @@ public class User {
     private boolean online;
     private ArrayList<String> friends;
     private ArrayList<String> itemId;
-    private ArrayList<String> notifications;
+   private ArrayList<String> notifications;
+    private ArrayList<String> groups;
+
+
 
     public void User() {
 
@@ -31,6 +34,7 @@ public class User {
         this.notifications = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.itemId = new ArrayList<>();
+        this.groups = new ArrayList<>();
         id = UUID.randomUUID().toString();
     }
 
@@ -45,6 +49,7 @@ public class User {
         this.notifications = new ArrayList<>();
         this.friends = new ArrayList<>();
         this.itemId = new ArrayList<>();
+        this.groups = new ArrayList<>();
         id = UUID.randomUUID().toString();
 
     }
@@ -61,6 +66,8 @@ public class User {
         this.friends = friends;
         this.itemId = itemId;
         this.notifications = notifications;
+
+        this.groups = new ArrayList<>();
     }
 
     public String getId() {
@@ -141,6 +148,14 @@ public class User {
 
     public void setItemId(ArrayList<String> itemId) {
         this.itemId = itemId;
+    }
+
+    public ArrayList<String> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(ArrayList<String> groups) {
+        this.groups = groups;
     }
 
     public ArrayList<String> getNotifications() {

@@ -1,5 +1,6 @@
 package DAO;
 
+import Model.Posting;
 import Model.User;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface UserDAO {
     public int deleteUserByID(String id);
     public User getUserByID(String id);
     public List<User> findUserByName(String name);
+    public List<Posting> getAllPostingsPerUser(String id);
 }

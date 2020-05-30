@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Group {
@@ -8,6 +9,7 @@ public class Group {
     private String password;
     private boolean isPrivate;
     private String description;
+    private ArrayList<String> members;
 
     public Group(String name, String password, boolean isPrivate, String description) {
         this.name = name;
@@ -15,6 +17,15 @@ public class Group {
         this.isPrivate = isPrivate;
         this.description = description;
         id= UUID.randomUUID().toString();
+        this.members=new ArrayList<>();
+    }
+
+    public ArrayList<String> getMembers() {
+        return members;
+    }
+
+    public void setMembers(ArrayList<String> members) {
+        this.members = members;
     }
 
     public String getId() {
