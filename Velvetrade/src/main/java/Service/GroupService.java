@@ -24,7 +24,7 @@ public class GroupService {
         return gDao.getGroupByID(groupId);
     }
     public ArrayList<Group> getAllGroupsFromIds(ArrayList<String> ids){
-       ArrayList<Group> a= new ArrayList<>();
+        ArrayList<Group> a= new ArrayList<>();
         for(String id:ids){
             a.add(gDao.getGroupByID(id));
         }
@@ -59,17 +59,15 @@ public class GroupService {
     public List<Posting> getAllPostingsPerGroup(String groupID){
         return gDao.getAllPostingsPerGroup(groupID);
     }
-    public List<Posting> getAllPostingsPerUser(String userID){
-        return gDao.getAllPostingsPerUser(userID);
-    }
+
     public List<Group> searchByName(String s){
         return gDao.searchByName(s);
     }
-    public Posting getPostingByID(String id){
-        return gDao.getPostingByID(id);
+    public Posting getPostingByID(String id, String postingId){
+        return gDao.getPostingByID(id,postingId);
     }
-    public int deletePosting(String id){
-       return gDao.deletePosting(id);
+    public int deletePosting(String id,String postingId){
+        return gDao.deletePosting(id, postingId);
     }
     public int updatePosting(String id,Posting posting){
         return gDao.updatePosting(id,posting);
@@ -79,7 +77,7 @@ public class GroupService {
         return gDao.validateUserEntry(groupID,entered_password);
     }
     public int removeUserByID(String groupID,String userID){
-     return gDao.removeUserByID(groupID,userID);
+        return gDao.removeUserByID(groupID,userID);
     }
 
 }
