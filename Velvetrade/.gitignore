@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-
+!**trade-master-f6378-firebase-adminsdk-itvx8-6b40e74b90.json**
 ### STS ###
 .apt_generated
 .classpath
