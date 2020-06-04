@@ -63,6 +63,12 @@ public class GroupService {
     public List<Group> searchByName(String s){
         return gDao.searchByName(s);
     }
+    public void acceptTrade(String groupId,String postingID,String offerID){
+        Posting p=getPostingByID(groupId,postingID);
+        p.setAcceptedOfferID(offerID);
+        Posting po=getPostingByID(groupId,offerID);
+        po.setAcceptedOfferID(postingID);
+    }
     public Posting getPostingByID(String id, String postingId){
         return gDao.getPostingByID(id,postingId);
     }

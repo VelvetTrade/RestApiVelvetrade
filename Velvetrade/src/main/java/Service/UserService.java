@@ -1,6 +1,7 @@
 package Service;
 
 import DAO.FakeUserDAO;
+import Model.Posting;
 import Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +22,9 @@ public class UserService {
         return fDAO.addNewUser(user);
 
     }
-
+    public List<Posting> getAllPostingsPerUser(String id){
+        return fDAO.getAllPostingsPerUser(id);
+    }
 
     public int updateUserByID(String id,User user) {
         return fDAO.updateUserByID(id,user);

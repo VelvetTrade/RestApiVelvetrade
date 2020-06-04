@@ -8,12 +8,14 @@ public class Posting {
     private String id;
     private String userId;
     private ArrayList<String> offers;
+    private String acceptedOfferID;
     private double price;
     private String description;
     private String desiredItems;
     private String itemTitle;
+    private boolean isOffer;
 
-    public Posting(String id, String userId, ArrayList<String> offers, double price, String description, String desiredItems, String itemTitle) {
+    public Posting(String id, String userId, ArrayList<String> offers, double price, String description, String desiredItems, String itemTitle,boolean isOffer) {
         this.id = id;
         this.userId = userId;
         this.offers = offers;
@@ -21,9 +23,11 @@ public class Posting {
         this.description = description;
         this.desiredItems = desiredItems;
         this.itemTitle = itemTitle;
+        this.isOffer=isOffer;
+        acceptedOfferID ="";
     }
 
-    public Posting(String userId, double price, String description, String desiredItems, String itemTitle) {
+    public Posting(String userId, double price, String description, String desiredItems, String itemTitle,boolean isOffer) {
         this.userId = userId;
         id= UUID.randomUUID().toString();
         this.offers = new ArrayList<>();
@@ -31,6 +35,16 @@ public class Posting {
         this.description = description;
         this.desiredItems = desiredItems;
         this.itemTitle = itemTitle;
+        this.isOffer=isOffer;
+        acceptedOfferID ="";
+    }
+
+    public String getAcceptedOfferID() {
+        return acceptedOfferID;
+    }
+
+    public void setAcceptedOfferID(String acceptedOfferID) {
+        this.acceptedOfferID = acceptedOfferID;
     }
 
     public String getId() {

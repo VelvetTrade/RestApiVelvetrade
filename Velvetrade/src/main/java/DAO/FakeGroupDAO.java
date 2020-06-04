@@ -123,7 +123,8 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
         ArrayList<Posting> a = new ArrayList();
         for (DocumentReference dr : ds) {
             try {
-                a.add(dr.get().get().toObject(Posting.class));
+                if(dr.get().get().getString("acceptedOfferID").equals("")&&dr.get().get().getBoolean("isOffer")==true){
+                a.add(dr.get().get().toObject(Posting.class));}
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {

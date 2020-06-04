@@ -1,17 +1,22 @@
-package com.example.Trade.API;
-import com.example.Trade.Service.GroupService;
-import com.example.Trade.Service.UserService;
-import com.example.Trade.Model.*;
+package API;
+
+import Model.Chat;
+import Model.Group;
+import Model.Posting;
+import Model.User;
+import Service.GroupService;
+import Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nonnull;
 import javax.validation.Valid;
-import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 
 @RequestMapping("api/v1/trade")
 @RestController
@@ -105,6 +110,7 @@ public class MainController {
     public int addNewUser(@PathVariable("newUser") User user) {
         return userService.addNewUser(user);
     }
+
     @PutMapping(path = "{updateUserId}")
     public int updateUserByID(@PathVariable("updateUserId") String id,@Valid@NonNull@RequestBody User user) {
         return userService.updateUserByID(id,user);
@@ -112,6 +118,11 @@ public class MainController {
     @GetMapping(path = "{allPostingUserId}")
     public List<Posting> getAllPostingsPerUser(@PathVariable("allPostingUserId") String userID){
         return userService.getAllPostingsPerUser(userID);
+    }
+
+    @PostMapping(path = "{groupId}/{postingId}/{offerId}")
+    public void acceptTrade(@PathVariable("postingId") String postingId,@PathVariable("groupId") String groupId,@PathVariable("offerId") String offerId) {
+        groupService.acceptTrade(groupId,postingId,offerId);
     }
     @DeleteMapping(path = "{deleteUserId}")
     public int deleteUserByID(@PathVariable("deleteUserId") String id) {
@@ -125,5 +136,6 @@ public class MainController {
     public List<User> findUserByName(@PathVariable("UserName") String name) {
         return userService.findUserByName(name);
     }
+
 }
 
