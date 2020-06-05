@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Group {
+
     private String id;
+
     private String name;
+    //will be encrypted or have none at all
     private String password;
+    //determines if the group is locked under a password
     private boolean isPrivate;
+
     private String description;
+    //Holds all members ids
     private ArrayList<String> members;
 
     public Group(String name, String password, boolean isPrivate, String description) {

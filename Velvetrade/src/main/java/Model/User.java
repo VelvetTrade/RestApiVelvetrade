@@ -5,16 +5,25 @@ import java.util.UUID;
 
 public class User {
     private String id;
+    //identifier cannot be similar to other users
     private String userName;
+    //can be blank
     private String email;
+    //the following can be blank if the user hasn't put in the info
     private String state;
     private String streetAddress;
     private int zip;
+    //must be encrypted and used for tax filing
     private String tin;
+    //may not be used
     private boolean online;
+    //list friend ids
     private ArrayList<String> friends;
+    //list of all offers and listing
     private ArrayList<String> itemId;
+    //may be used to show a trade was made
    private ArrayList<String> notifications;
+   //All group ids
     private ArrayList<String> groups;
 
 
