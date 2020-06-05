@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Chat {
+
+
     String id;
+    //all the usernames relative to the message so the message at 1 will correspond to user 1 so there will be duplicates
     ArrayList<String> userNames;
     ArrayList<String> messages;
+
     public Chat(){
         id= UUID.randomUUID().toString();
         userNames= new ArrayList<>();

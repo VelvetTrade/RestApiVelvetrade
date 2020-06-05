@@ -7,12 +7,20 @@ public class Posting {
 
     private String id;
     private String userId;
+
+    //ids of all offers
     private ArrayList<String> offers;
+    // will be blank if not accepted
     private String acceptedOfferID;
+    //U.S dollars
     private double price;
+
     private String description;
+    //can be blank if offer
     private String desiredItems;
+
     private String itemTitle;
+    //if the posting is an offer instead of a listing
     private boolean isOffer;
 
     public Posting(String id, String userId, ArrayList<String> offers, double price, String description, String desiredItems, String itemTitle,boolean isOffer) {
