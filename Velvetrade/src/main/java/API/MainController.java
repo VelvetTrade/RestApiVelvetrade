@@ -1,11 +1,7 @@
-package API;
-
-import Model.Chat;
-import Model.Group;
-import Model.Posting;
-import Model.User;
-import Service.GroupService;
-import Service.UserService;
+package com.example.Trade.API;
+import com.example.Trade.Service.GroupService;
+import com.example.Trade.Service.UserService;
+import com.example.Trade.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -15,127 +11,116 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 @RequestMapping("api/v1/trade")
 @RestController
 public class MainController {
-    private final GroupService groupService;
-    private final UserService userService;
+    private final GroupService groupS;
+    private final UserService userS;
     @Autowired
     public MainController(GroupService groupService, UserService userService){
-        this.groupService = groupService;
-        this.userService = userService;
+        this.groupS = groupService;
+        this.userS = userService;
     }
-    @GetMapping(path = "{groupId}")
+    @GetMapping(path = "getGroup/{groupId}")
     public Group GetGroupById(@PathVariable("groupId") String groupId)
     {
-        return groupService.getGroupByID(groupId);
+        return groupS.getGroupByID(groupId);
     }
-    @GetMapping(path = "{groupIds}")
+    @GetMapping(path = "getGroups/{groupIds}")
     public ArrayList<Group> getAllGroupsFromIds( @PathVariable("groupIds") ArrayList<String> ids)
     {
-        return groupService.getAllGroupsFromIds(ids);//maybe change the method in the service to return optional variable to add .orElse();
+        return groupS.getAllGroupsFromIds(ids);//maybe change the method in the service to return optional variable to add .orElse();
     }
-    @DeleteMapping(path = "{groupId}")
+    @DeleteMapping(path = "deleteGroup/{groupId}")
     public void deleteGroupById(@PathVariable("groupId") String groupId)
     {
-        groupService.deleteGroupByID(groupId);
+        groupS.deleteGroupByID(groupId);
     }
-    @PostMapping(path = "{groupId}")
+    @PostMapping(path = "createGroup/{groupId}")
     public void createGroup(@PathVariable("groupId") Group group)
     {
-        groupService.createGroup(group);
+        groupS.createGroup(group);
     }
-    @PutMapping(path = "{groupId}")
+    @PutMapping(path = "update/{groupId}")
     public void updateGroupById(@PathVariable("groupId") String id, @Valid @NonNull @RequestBody Group g)
     {
-        groupService.updateGroupByID(id,g);
+        groupS.updateGroupByID(id,g);
     }
-    @GetMapping(path = "{ChatGroupId}")
+    @GetMapping(path = "getChat/{ChatGroupId}")
     public Chat getChatByGroupId(@PathVariable("ChatGroupId") String groupId)
     {
-        return groupService.getChatByGroupId(groupId);
+        return groupS.getChatByGroupId(groupId);
     }
-    @GetMapping(path = "chat")
+    @GetMapping(path = "getChat/{chat}")
     public Chat getChat(@PathVariable("chat") String id)
     {
-        return groupService.getChat(id);
+        return groupS.getChat(id);
     }
-    @PutMapping(path = "chat")
+    @PutMapping(path = "updateChatById/{chat}")
     public void updateChatById(@PathVariable("chat") String id,@Valid@Nonnull @RequestBody Chat c)
     {
-        groupService.updateChatByID(id,c);
+        groupS.updateChatByID(id,c);
     }
-    @PostMapping(path = "{newPostingId}/{newPosting}")
+    @PostMapping(path = "createNewPosting/{newPostingId}/message/{newPosting}")
     public void createNewPosting(@PathVariable("newPostingId") String postingId,@PathVariable("newPosting") Posting posting)
     {
-        groupService.createNewPosting(postingId,posting);
+        groupS.createNewPosting(postingId,posting);
     }
-    @GetMapping(path = "PostGroupId")
+    @GetMapping(path = "getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
     {
-        return groupService.getAllPostingsPerGroup(groupId);
+        return groupS.getAllPostingsPerGroup(groupId);
     }
-    @GetMapping(path = "searchName")
+    @GetMapping(path = "searchByName/{searchName}")
     public List<Group> searchByName(@PathVariable("searchName") String name)
     {
-        return groupService.searchByName(name);
+        return groupS.searchByName(name);
     }
-    @GetMapping(path = "{getPostingId}/{gPostingId}")
+    @GetMapping(path = "getPostingById/{getPostingId}/message/{gPostingId}")
     public Posting getPostingById(@PathVariable("getPostingId") String id,@PathVariable("gPostingId") String postingId)
     {
-        return groupService.getPostingByID(id,postingId);
+        return groupS.getPostingByID(id,postingId);
     }
-    @DeleteMapping(path = "{deletePostingId}/{dPostingId}")
+    @DeleteMapping(path = "deletePosting/{deletePostingId}/message/{dPostingId}")
     public int deletePosting(@PathVariable("deletePostingId") String id,@PathVariable("dPostingId") String postingId)
     {
-        return groupService.deletePosting(id,postingId);
+        return groupS.deletePosting(id,postingId);
     }
-    @PutMapping(path = "{updatePostingId}")
+    @PutMapping(path = "updatePosting/{updatePostingId}")
     public int updatePosting(@PathVariable("updatePostingId") String id,@NonNull @Valid @RequestBody Posting posting)
     {
-        return groupService.updatePosting(id,posting);
+        return groupS.updatePosting(id,posting);
     }
-    @GetMapping(path = "{validateId}/{validatePass}")
+    @GetMapping(path = "validateUserEntry/{validateId}/message/{validatePass}")
     public boolean validateUserEntry(@PathVariable("validateId") String groupID,@RequestBody @PathVariable("validatePass") String entered_password){
-        return groupService.validateUserEntry(groupID,entered_password);
+        return groupS.validateUserEntry(groupID,entered_password);
     }
-    @DeleteMapping(path = "{deleteUserId}/{dUserId}")
-    public int removeUserByID(@PathVariable("deleteUserId") String groupID,@PathVariable("dUserId") String userID){
-        return groupService.removeUserByID(groupID,userID);
+    @DeleteMapping(path = "removeUserById/{deleteUserId}/message/{dUserId}")
+    public int removeUserById(@PathVariable("deleteUserId") String groupID,@PathVariable("dUserId") String userID){
+        return groupS.removeUserByID(groupID,userID);
     }
-    @PostMapping(path = "{newUser}")
+    @PostMapping(path = "addNewUser/{newUser}")
     public int addNewUser(@PathVariable("newUser") User user) {
-        return userService.addNewUser(user);
+        return userS.addNewUser(user);
     }
-
-    @PutMapping(path = "{updateUserId}")
-    public int updateUserByID(@PathVariable("updateUserId") String id,@Valid@NonNull@RequestBody User user) {
-        return userService.updateUserByID(id,user);
+    @PutMapping(path = "updateUserById/{updateUserId}")
+    public int updateUserById(@PathVariable("updateUserId") String id,@Valid@NonNull@RequestBody User user) {
+        return userS.updateUserByID(id,user);
     }
-    @GetMapping(path = "{allPostingUserId}")
+    @GetMapping(path = "getAllPostingsPerUser/{allPostingUserId}")
     public List<Posting> getAllPostingsPerUser(@PathVariable("allPostingUserId") String userID){
-        return userService.getAllPostingsPerUser(userID);
+        return userS.getAllPostingsPerUser(userID);
     }
-
-    @PostMapping(path = "{groupId}/{postingId}/{offerId}")
-    public void acceptTrade(@PathVariable("postingId") String postingId,@PathVariable("groupId") String groupId,@PathVariable("offerId") String offerId) {
-        groupService.acceptTrade(groupId,postingId,offerId);
+    @DeleteMapping(path = "deleteUserById/{deleteUserId}")
+    public int deleteUserById(@PathVariable("deleteUserId") String id) {
+        return userS.deleteUserByID(id);
     }
-    @DeleteMapping(path = "{deleteUserId}")
-    public int deleteUserByID(@PathVariable("deleteUserId") String id) {
-        return userService.deleteUserByID(id);
+    @GetMapping(path = "getUserById/{getUserId}")
+    public User getUserById(@PathVariable("getUserId") String id) {
+        return userS.getUserByID(id);
     }
-    @GetMapping(path = "{getUserId}")
-    public User getUserByID(@PathVariable("getUserId") String id) {
-        return userService.getUserByID(id);
-    }
-    @GetMapping(path = "{UserName}")
+    @GetMapping(path = "findUserByName/{UserName}")
     public List<User> findUserByName(@PathVariable("UserName") String name) {
-        return userService.findUserByName(name);
+        return userS.findUserByName(name);
     }
-
 }
-
