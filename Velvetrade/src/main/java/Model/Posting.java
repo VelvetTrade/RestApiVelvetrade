@@ -35,7 +35,15 @@ public class Posting {
         acceptedOfferID ="";
     }
 
-    public Posting(String userId, double price, String description, String desiredItems, String itemTitle,boolean isOffer) {
+    public boolean isOffer() {
+        return isOffer;
+    }
+
+    public void setOffer(boolean offer) {
+        isOffer = offer;
+    }
+
+    public Posting(String userId, double price, String description, String desiredItems, String itemTitle, boolean isOffer) {
         this.userId = userId;
         id= UUID.randomUUID().toString();
         this.offers = new ArrayList<>();

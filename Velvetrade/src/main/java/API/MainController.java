@@ -1,7 +1,11 @@
-package com.example.Trade.API;
-import com.example.Trade.Service.GroupService;
-import com.example.Trade.Service.UserService;
-import com.example.Trade.Model.*;
+package API;
+
+import Model.Chat;
+import Model.Group;
+import Model.Posting;
+import Model.User;
+import Service.GroupService;
+import Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +40,8 @@ public class MainController {
     {
         groupS.deleteGroupByID(groupId);
     }
-    @PostMapping(path = "createGroup/{groupId}")
-    public void createGroup(@PathVariable("groupId") Group group)
+    @PostMapping(path = "createGroup")
+    public void createGroup(@Valid @NonNull @RequestBody Group group)
     {
         groupS.createGroup(group);
     }
@@ -61,10 +65,10 @@ public class MainController {
     {
         groupS.updateChatByID(id,c);
     }
-    @PostMapping(path = "createNewPosting/{newPostingId}/message/{newPosting}")
-    public void createNewPosting(@PathVariable("newPostingId") String postingId,@PathVariable("newPosting") Posting posting)
+    @PostMapping(path = "createNewPosting")
+    public void createNewPosting(@Valid @NonNull @RequestBody Posting posting)
     {
-        groupS.createNewPosting(postingId,posting);
+        groupS.createNewPosting(posting.getId(),posting);
     }
     @GetMapping(path = "getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
@@ -99,8 +103,8 @@ public class MainController {
     public int removeUserById(@PathVariable("deleteUserId") String groupID,@PathVariable("dUserId") String userID){
         return groupS.removeUserByID(groupID,userID);
     }
-    @PostMapping(path = "addNewUser/{newUser}")
-    public int addNewUser(@PathVariable("newUser") User user) {
+    @PostMapping(path = "addNewUser")
+    public int addNewUser(@Valid @NonNull @RequestBody User user) {
         return userS.addNewUser(user);
     }
     @PutMapping(path = "updateUserById/{updateUserId}")

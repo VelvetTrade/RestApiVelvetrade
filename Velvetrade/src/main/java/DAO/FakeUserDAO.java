@@ -15,9 +15,10 @@ import java.util.concurrent.ExecutionException;
 public class FakeUserDAO implements UserDAO {
     @Override
     public int addNewUser(User user) {
+       User u =new User(user.getUserName(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline());
         try {
             Firestore dbFirestore = FirestoreClient.getFirestore();
-            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(user.getId()).set(user);
+            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(user.getId()).set(u);
         }catch (Exception e){
             return 0;
         }
