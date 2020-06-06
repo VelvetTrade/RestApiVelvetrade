@@ -1,9 +1,9 @@
-package Service;
+package com.Velvetrade.Velvetrade.Service;
 
-import DAO.FakeGroupDAO;
-import Model.Chat;
-import Model.Group;
-import Model.Posting;
+import com.Velvetrade.Velvetrade.DAO.FakeGroupDAO;
+import com.Velvetrade.Velvetrade.Model.Chat;
+import com.Velvetrade.Velvetrade.Model.Group;
+import com.Velvetrade.Velvetrade.Model.Posting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ import java.util.List;
 public class GroupService {
     FakeGroupDAO gDao;
 
-    ///Initializes the DAO
+    ///Initializes the com.Velvetrade.Velvetrade.DAO
     @Autowired
-    public GroupService(@Qualifier("fakeDao") FakeGroupDAO gDao) {
+    public GroupService(@Qualifier("GroupDAO") FakeGroupDAO gDao) {
         this.gDao=gDao;
 
     }

@@ -1,11 +1,11 @@
-package API;
+package com.Velvetrade.Velvetrade.API;
 
-import Model.Chat;
-import Model.Group;
-import Model.Posting;
-import Model.User;
-import Service.GroupService;
-import Service.UserService;
+import com.Velvetrade.Velvetrade.Model.Chat;
+import com.Velvetrade.Velvetrade.Model.Group;
+import com.Velvetrade.Velvetrade.Model.Posting;
+import com.Velvetrade.Velvetrade.Model.User;
+import com.Velvetrade.Velvetrade.Service.GroupService;
+import com.Velvetrade.Velvetrade.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequestMapping("api/v1/trade")
+@RequestMapping("/api/v1/trade")
 @RestController
 public class MainController {
     private final GroupService groupS;
@@ -27,7 +27,7 @@ public class MainController {
     }
     @GetMapping(path = "getGroup/{groupId}")
     public Group GetGroupById(@PathVariable("groupId") String groupId)
-    {
+    {   System.out.println("Called Get Group");
         return groupS.getGroupByID(groupId);
     }
     @GetMapping(path = "getGroups/{groupIds}")
@@ -43,6 +43,7 @@ public class MainController {
     @PostMapping(path = "createGroup")
     public void createGroup(@Valid @NonNull @RequestBody Group group)
     {
+        System.out.println("Called Create Group");
         groupS.createGroup(group);
     }
     @PutMapping(path = "update/{groupId}")

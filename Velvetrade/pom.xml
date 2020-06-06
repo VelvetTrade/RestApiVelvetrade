@@ -12,7 +12,7 @@
 	<artifactId>Velvetrade</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Velvetrade</name>
-	<description>Trading platform REST API</description>
+	<description>Trading platform REST com.Velvetrade.Velvetrade.API</description>
 
 	<properties>
 		<java.version>1.8</java.version>

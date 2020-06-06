@@ -1,7 +1,7 @@
-package DAO;
+package com.Velvetrade.Velvetrade.DAO;
 
-import Model.Posting;
-import Model.User;
+import com.Velvetrade.Velvetrade.Model.Posting;
+import com.Velvetrade.Velvetrade.Model.User;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;

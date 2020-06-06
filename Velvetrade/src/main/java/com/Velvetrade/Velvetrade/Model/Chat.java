@@ -1,4 +1,6 @@
-package Model;
+package com.Velvetrade.Velvetrade.Model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,7 +19,7 @@ public class Chat {
         messages= new ArrayList<>();
     }
 
-    public Chat(String id, ArrayList<String> userNames, ArrayList<String> messages) {
+    public Chat(@JsonProperty("id")String id, @JsonProperty("usernames")ArrayList<String> userNames, @JsonProperty("messages")ArrayList<String> messages) {
         this.id = id;
         this.userNames = userNames;
         this.messages = messages;

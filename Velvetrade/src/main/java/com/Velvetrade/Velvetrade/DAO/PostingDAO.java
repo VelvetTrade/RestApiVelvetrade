@@ -1,6 +1,6 @@
-package DAO;
+package com.Velvetrade.Velvetrade.DAO;
 
-import Model.Posting;
+import com.Velvetrade.Velvetrade.Model.Posting;
 
 import java.util.List;
 

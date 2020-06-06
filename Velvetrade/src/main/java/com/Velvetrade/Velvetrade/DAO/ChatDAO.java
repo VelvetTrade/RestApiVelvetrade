@@ -1,6 +1,6 @@
-package DAO;
+package com.Velvetrade.Velvetrade.DAO;
 
-import Model.Chat;
+import com.Velvetrade.Velvetrade.Model.Chat;
 
 public interface ChatDAO {
 

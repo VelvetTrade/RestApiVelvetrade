@@ -1,8 +1,8 @@
-package DAO;
+package com.Velvetrade.Velvetrade.DAO;
 
-import Model.Chat;
-import Model.Group;
-import Model.Posting;
+import com.Velvetrade.Velvetrade.Model.Chat;
+import com.Velvetrade.Velvetrade.Model.Group;
+import com.Velvetrade.Velvetrade.Model.Posting;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;

@@ -1,4 +1,6 @@
-package Model;
+package com.Velvetrade.Velvetrade.Model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -43,7 +45,7 @@ public class Posting {
         isOffer = offer;
     }
 
-    public Posting(String userId, double price, String description, String desiredItems, String itemTitle, boolean isOffer) {
+    public Posting(@JsonProperty("userId")String userId,@JsonProperty("price") double price,@JsonProperty("description") String description,@JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle,@JsonProperty("isOffer") boolean isOffer) {
         this.userId = userId;
         id= UUID.randomUUID().toString();
         this.offers = new ArrayList<>();

@@ -1,4 +1,6 @@
-package Model;
+package com.Velvetrade.Velvetrade.Model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,7 +19,7 @@ public class Group {
     //Holds all members ids
     private ArrayList<String> members;
 
-    public Group(String name, String password, boolean isPrivate, String description) {
+    public Group(@JsonProperty("name")String name,@JsonProperty("password") String password, @JsonProperty("isPrivate")boolean isPrivate,@JsonProperty("description") String description) {
         this.name = name;
         this.password = password;
         this.isPrivate = isPrivate;

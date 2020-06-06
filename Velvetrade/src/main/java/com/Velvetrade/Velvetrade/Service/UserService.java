@@ -1,8 +1,8 @@
-package Service;
+package com.Velvetrade.Velvetrade.Service;
 
-import DAO.FakeUserDAO;
-import Model.Posting;
-import Model.User;
+import com.Velvetrade.Velvetrade.DAO.FakeUserDAO;
+import com.Velvetrade.Velvetrade.Model.Posting;
+import com.Velvetrade.Velvetrade.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,6 @@
-package Model;
+package com.Velvetrade.Velvetrade.Model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -32,7 +34,7 @@ public class User {
 
     }
 
-    public User(String userName, String email, String state, String streetAddress, int zip, String tin, boolean online) {
+    public User(@JsonProperty("username")String userName, @JsonProperty("email")String email, @JsonProperty("state")String state,@JsonProperty("streetAddress") String streetAddress,@JsonProperty("zip") int zip, @JsonProperty("tin")String tin,@JsonProperty("online") boolean online) {
         this.userName = userName;
         this.email = email;
         this.state = state;
