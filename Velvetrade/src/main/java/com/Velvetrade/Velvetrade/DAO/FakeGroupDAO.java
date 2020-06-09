@@ -99,7 +99,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     public int createGroup(Group group) {
         Group gr= new Group(group.getName(),group.getPassword(),group.isPrivate(),group.getDescription());
         ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(group.getId()).set(gr);
-
+        FirestoreClient.getFirestore().collection("Groups").document(group.getId()).collection("Chat").document().set(new Chat());
         return 1;
     }
 
