@@ -24,17 +24,16 @@ public class User {
     //list of all offers and listing
     private ArrayList<String> itemId;
     //may be used to show a trade was made
-   private ArrayList<String> notifications;
-   //All group ids
+    private ArrayList<String> notifications;
+    //All group ids
     private ArrayList<String> groups;
-
 
 
     public void User() {
 
     }
 
-    public User(@JsonProperty("username")String userName, @JsonProperty("email")String email, @JsonProperty("state")String state,@JsonProperty("streetAddress") String streetAddress,@JsonProperty("zip") int zip, @JsonProperty("tin")String tin,@JsonProperty("online") boolean online) {
+    public User(@JsonProperty("username") String userName, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online) {
         this.userName = userName;
         this.email = email;
         this.state = state;
@@ -65,7 +64,7 @@ public class User {
 
     }
 
-    public User(String id, String userName, String email, String state, String streetAddress, int zip, String tin, boolean online, ArrayList<String> friends, ArrayList<String> itemId, ArrayList<String> notifications) {
+    public User(@JsonProperty("username") String userName, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online, @JsonProperty("friends") ArrayList<String> friends, @JsonProperty("items") ArrayList<String> itemId, @JsonProperty("notifications") ArrayList<String> notifications, @JsonProperty("groups") ArrayList<String> groups) {
         this.id = id;
         this.userName = userName;
         this.email = email;
@@ -77,8 +76,7 @@ public class User {
         this.friends = friends;
         this.itemId = itemId;
         this.notifications = notifications;
-
-        this.groups = new ArrayList<>();
+        this.groups = groups;
     }
 
     public String getId() {

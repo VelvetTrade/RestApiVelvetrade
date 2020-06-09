@@ -3,6 +3,7 @@ package com.Velvetrade.Velvetrade.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Group {
@@ -76,6 +77,14 @@ public class Group {
         this.description = description;
     }
 
+    public Group(@JsonProperty("id")String id,@JsonProperty("name")String name, @JsonProperty("password") String password, @JsonProperty("isPrivate")boolean isPrivate, @JsonProperty("description") String description, @JsonProperty("members")List<String> members) {
+        this.name = name;
+        this.password = password;
+        this.isPrivate = isPrivate;
+        this.description = description;
+        id= UUID.randomUUID().toString();
+        this.members= (ArrayList<String>) members;
+    }
     public Group(String id, String name, String password, boolean isPrivate, String description) {
         this.id = id;
         this.name = name;

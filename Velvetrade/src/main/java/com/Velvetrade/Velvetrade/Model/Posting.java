@@ -25,7 +25,7 @@ public class Posting {
     //if the posting is an offer instead of a listing
     private boolean isOffer;
 
-    public Posting(String id, String userId, ArrayList<String> offers, double price, String description, String desiredItems, String itemTitle,boolean isOffer) {
+    public Posting(@JsonProperty("userId")String userId,@JsonProperty("price") double price,@JsonProperty("description") String description,@JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle,@JsonProperty("isOffer") boolean isOffer, @JsonProperty("acceptedOfferId")String acceptedOfferID) {
         this.id = id;
         this.userId = userId;
         this.offers = offers;
@@ -34,7 +34,7 @@ public class Posting {
         this.desiredItems = desiredItems;
         this.itemTitle = itemTitle;
         this.isOffer=isOffer;
-        acceptedOfferID ="";
+        acceptedOfferID =acceptedOfferID;
     }
 
     public boolean isOffer() {

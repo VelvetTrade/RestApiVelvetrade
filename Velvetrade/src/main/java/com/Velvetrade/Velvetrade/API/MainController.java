@@ -51,6 +51,9 @@ public class MainController {
     {
         groupS.updateGroupByID(id,g);
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     @GetMapping(path = "/getChat/{ChatGroupId}")
     public Chat getChatByGroupId(@PathVariable("ChatGroupId") String groupId)
     {
@@ -66,8 +69,10 @@ public class MainController {
     {
         groupS.updateChatByID(id,c);
     }
+
+//////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping(path = "/createNewPosting")
-    public void createNewPosting(@Valid @NonNull @RequestBody Posting posting)
+    public void createNewPosting(@NonNull @RequestBody Posting posting)
     {
         groupS.createNewPosting(posting.getId(),posting);
     }
@@ -81,13 +86,13 @@ public class MainController {
     {
         return groupS.searchByName(name);
     }
-    @GetMapping(path = "/getPostingById/{getPostingId}/message/{gPostingId}")
-    public Posting getPostingById(@PathVariable("getPostingId") String id,@PathVariable("gPostingId") String postingId)
+    @GetMapping(path = "/getPostingById/{groupId}/{gPostingId}")
+    public Posting getPostingById(@PathVariable("groupId") String id,@PathVariable("gPostingId") String postingId)
     {
         return groupS.getPostingByID(id,postingId);
     }
-    @DeleteMapping(path = "/deletePosting/{deletePostingId}/message/{dPostingId}")
-    public int deletePosting(@PathVariable("deletePostingId") String id,@PathVariable("dPostingId") String postingId)
+    @DeleteMapping(path = "/deletePosting/{groupId}/{postingId}")
+    public int deletePosting(@PathVariable("groupId") String id,@PathVariable("postingId") String postingId)
     {
         return groupS.deletePosting(id,postingId);
     }
@@ -96,12 +101,12 @@ public class MainController {
     {
         return groupS.updatePosting(id,posting);
     }
-    @GetMapping(path = "/validateUserEntry/{validateId}/message/{validatePass}")
-    public boolean validateUserEntry(@PathVariable("validateId") String groupID,@RequestBody @PathVariable("validatePass") String entered_password){
+    @GetMapping(path = "/validateUserEntry/{validateId}/{validatePass}")
+    public boolean validateUserEntry(@PathVariable("validateId") String groupID, @PathVariable("validatePass") String entered_password){
         return groupS.validateUserEntry(groupID,entered_password);
     }
-    @DeleteMapping(path = "/removeUserById/{deleteUserId}/message/{dUserId}")
-    public int removeUserById(@PathVariable("deleteUserId") String groupID,@PathVariable("dUserId") String userID){
+    @DeleteMapping(path = "/removeUserFromGroupById/{groupId}/{UserId}")
+    public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID){
         return groupS.removeUserByID(groupID,userID);
     }
     @PostMapping(path = "/addNewUser")
@@ -109,7 +114,7 @@ public class MainController {
         return userS.addNewUser(user);
     }
     @PutMapping(path = "/updateUserById/{updateUserId}")
-    public int updateUserById(@PathVariable("updateUserId") String id,@Valid@NonNull@RequestBody User user) {
+    public int updateUserById(@PathVariable("updateUserId") String id,@NonNull@RequestBody User user) {
         return userS.updateUserByID(id,user);
     }
     @GetMapping(path = "/getAllPostingsPerUser/{allPostingUserId}")
