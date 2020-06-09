@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class FakeUserDAO implements UserDAO {
     @Override
     public int addNewUser(User user) {
-       User u =new User(user.getUserName(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline());
+       User u =new User(user.getUserName(),user.getPassword(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline());
         try {
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(user.getId()).set(u);
@@ -42,6 +42,17 @@ public class FakeUserDAO implements UserDAO {
 
 
         return o;
+    }
+
+    @Override
+    public User authenticateUser(String username, String password) {
+        List<User> users=findUserByName(username);
+        for(User user:users){
+            if(user.getPassword()==password){
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override

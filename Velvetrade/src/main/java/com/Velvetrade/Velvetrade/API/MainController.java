@@ -104,6 +104,12 @@ public class MainController {
     public boolean validateUserEntry(@PathVariable("validateId") String groupID, @PathVariable("validatePass") String entered_password){
         return groupS.validateUserEntry(groupID,entered_password);
     }
+
+    @GetMapping(path = "/authenticateUser/{username}/{password}")
+    public User authenticateUser(@PathVariable("username") String username, @PathVariable("password") String entered_password){
+        return userS.authenticateUser(username,entered_password);
+    }
+
     @DeleteMapping(path = "/removeUserFromGroupById/{groupId}/{UserId}")
     public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID){
         return groupS.removeUserByID(groupID,userID);

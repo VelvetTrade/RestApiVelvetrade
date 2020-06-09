@@ -12,4 +12,5 @@ public interface UserDAO {
     public User getUserByID(String id);
     public List<User> findUserByName(String name);
     public List<Posting> getAllPostingsPerUser(String id);
+    public User authenticateUser(String username,String password);
 }

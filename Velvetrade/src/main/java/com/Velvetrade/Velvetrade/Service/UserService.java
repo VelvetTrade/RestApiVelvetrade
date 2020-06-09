@@ -28,6 +28,9 @@ public class UserService {
         return fDAO.getAllPostingsPerUser(id);
     }
 
+    public User authenticateUser(String username,String password){
+        return fDAO.authenticateUser(username,password);
+    }
 
     //updates user by id
     public int updateUserByID(String id,User user) {

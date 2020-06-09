@@ -11,6 +11,8 @@ public class User {
     private String userName;
     //can be blank
     private String email;
+
+    private String password;
     //the following can be blank if the user hasn't put in the info
     private String state;
     private String streetAddress;
@@ -20,6 +22,15 @@ public class User {
     //may not be used
     private boolean online;
     //list friend ids
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private ArrayList<String> friends;
     //list of all offers and listing
     private ArrayList<String> itemId;
@@ -33,10 +44,11 @@ public class User {
 
     }
 
-    public User(@JsonProperty("username") String userName, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online) {
+    public User(@JsonProperty("username") String userName,@JsonProperty("password") String password ,@JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online) {
         this.userName = userName;
         this.email = email;
         this.state = state;
+        this.password=password;
         this.streetAddress = streetAddress;
         this.zip = zip;
         this.tin = tin;
@@ -64,7 +76,7 @@ public class User {
 
     }
 
-    public User(@JsonProperty("username") String userName, @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online, @JsonProperty("friends") ArrayList<String> friends, @JsonProperty("items") ArrayList<String> itemId, @JsonProperty("notifications") ArrayList<String> notifications, @JsonProperty("groups") ArrayList<String> groups) {
+    public User(@JsonProperty("username") String userName,@JsonProperty("password") String password , @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online, @JsonProperty("friends") ArrayList<String> friends, @JsonProperty("items") ArrayList<String> itemId, @JsonProperty("notifications") ArrayList<String> notifications, @JsonProperty("groups") ArrayList<String> groups) {
         this.id = id;
         this.userName = userName;
         this.email = email;

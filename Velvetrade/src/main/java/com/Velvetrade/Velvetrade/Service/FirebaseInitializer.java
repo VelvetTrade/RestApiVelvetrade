@@ -15,7 +15,7 @@ public class FirebaseInitializer {
     public void initializeFirebase() throws IOException {
         System.out.println("Starting firebase");
         FileInputStream serviceAccount =
-                new FileInputStream("C:\\Users\\Davin\\Documents\\GitHub\\VelveTrade\\RestApiVelvetrade\\Velvetrade\\src\\main\\java\\com\\Velvetrade\\Velvetrade\\serviceAccountKey.json");
+                new FileInputStream("./serviceAccountKey.json");
         System.out.println("Starting firebase "+ serviceAccount.available());
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
