@@ -25,6 +25,9 @@ public class Posting {
     private String itemTitle;
     //if the posting is an offer instead of a listing
     private boolean isOffer;
+    public Posting(){
+
+    }
 
     public Posting(@JsonProperty("id") String id, @JsonProperty("offers") List<String> offers, @JsonProperty("userId")String userId, @JsonProperty("price") double price, @JsonProperty("description") String description, @JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle, @JsonProperty("isOffer") boolean isOffer, @JsonProperty("acceptedOfferId")String acceptedOfferID) {
         if(id==null){

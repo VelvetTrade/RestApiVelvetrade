@@ -32,9 +32,7 @@ public class User {
     private ArrayList<String> groups;
 
 
-    public void User() {
 
-    }
     public String getPassword() {
         return password;
     }
@@ -58,19 +56,7 @@ public class User {
 //        id = UUID.randomUUID().toString();
 //    }
 
-    public User(String username) {
-        this.userName = userName;
-        this.email = "";
-        this.state = "";
-        this.streetAddress = "";
-        this.zip = 0;
-        this.tin = "";
-        this.online = true;
-        this.notifications = new ArrayList<>();
-        this.friends = new ArrayList<>();
-        this.itemId = new ArrayList<>();
-        this.groups = new ArrayList<>();
-        id = UUID.randomUUID().toString();
+    public User() {
 
     }
 

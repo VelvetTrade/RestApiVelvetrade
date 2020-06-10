@@ -90,6 +90,9 @@ public class Group {
         }else{
         this.members= (ArrayList<String>) members;}
     }
+    public Group(){
+
+    }
     public Group(String id, String name, String password, boolean isPrivate, String description) {
         this.id = id;
         this.name = name;
