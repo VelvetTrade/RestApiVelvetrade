@@ -96,10 +96,10 @@ public class User {
 //        this.state = state;
 //        this.streetAddress = streetAddress;
 //        this.tin = tin;
-//        this.friends = friends;
-//        this.itemId = itemId;
-//        this.notifications = notifications;
-//        this.groups = groups;
+        this.friends = friends;
+        this.itemId = itemId;
+        this.notifications = notifications;
+       this.groups = groups;
 //        this.password=password;
         //make sure to keep information if the user does not want to update
         if(userName!=null)
