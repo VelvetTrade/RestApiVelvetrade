@@ -31,8 +31,6 @@ public class User {
     //All group ids
     private ArrayList<String> groups;
 
-
-
     public String getPassword() {
         return password;
     }
@@ -60,9 +58,21 @@ public class User {
 
     }
 
-    public User(@JsonProperty("id") String id,@JsonProperty("username") String userName,@JsonProperty("password") String password , @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online, @JsonProperty("friends") ArrayList<String> friends, @JsonProperty("items") ArrayList<String> itemId, @JsonProperty("notifications") ArrayList<String> notifications, @JsonProperty("groups") ArrayList<String> groups) {
+    public User(@JsonProperty("id") String id,
+                @JsonProperty("username") String userName,
+                @JsonProperty("password") String password ,
+                @JsonProperty("email") String email,
+                @JsonProperty("state") String state,
+                @JsonProperty("streetAddress") String streetAddress,
+                @JsonProperty("zip") int zip,
+                @JsonProperty("tin") String tin,
+                @JsonProperty("online") boolean online,
+                @JsonProperty("friends") ArrayList<String> friends,
+                @JsonProperty("items") ArrayList<String> itemId,
+                @JsonProperty("notifications") ArrayList<String> notifications,
+                @JsonProperty("groups") ArrayList<String> groups) {
         if(id==null){
-           id=UUID.randomUUID().toString();
+            id=UUID.randomUUID().toString();
         }
         if(groups==null){
             groups=new ArrayList<String>();
@@ -76,22 +86,52 @@ public class User {
         if(notifications==null){
             notifications=new ArrayList<String>();
         }
+        
+
         this.id = id;
-
-        if(userName!=null){
-        this.userName = userName;}
-
-        this.email = email;
-        this.state = state;
-        this.streetAddress = streetAddress;
-        this.zip = zip;
-        this.tin = tin;
         this.online = online;
-        this.friends = friends;
-        this.itemId = itemId;
-        this.notifications = notifications;
-        this.groups = groups;
-        this.password=password;
+//        this.zip = zip;
+
+//        this.userName = userName;
+//        this.email = email;
+//        this.state = state;
+//        this.streetAddress = streetAddress;
+//        this.tin = tin;
+//        this.friends = friends;
+//        this.itemId = itemId;
+//        this.notifications = notifications;
+//        this.groups = groups;
+//        this.password=password;
+        //make sure to keep information if the user does not want to update
+        if(userName!=null)
+        {
+            this.userName = userName;
+        }
+        if(password!=null)
+        {
+            this.password = password;
+        }
+        if(email!=null)
+        {
+            this.email = email;
+        }
+        if(state!=null)
+        {
+            this.state = state;
+        }
+        if(streetAddress!=null)
+        {
+            this.streetAddress = streetAddress;
+        }
+        System.out.println("the current zip is: " + zip);
+        if(zip == 0)
+        {
+            this.zip = zip;
+        }
+        if(tin!=null);
+        {
+            this.tin = tin;
+        }
     }
 
     public String getId() {
