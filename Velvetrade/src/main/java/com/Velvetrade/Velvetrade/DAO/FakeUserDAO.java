@@ -59,8 +59,10 @@ public class FakeUserDAO implements UserDAO {
     @Override
     public int updateUserByID(String id,User user) {
         try {
+
             Firestore dbFirestore = FirestoreClient.getFirestore();
-            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(user.getId()).set(user);
+            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(id).set(user);
+
         }catch (Exception e){
             return 0;
         }

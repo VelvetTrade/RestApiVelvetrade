@@ -139,10 +139,13 @@ public class MainController {
     public int deleteUserById(@PathVariable("deleteUserId") String id) {
         return userS.deleteUserByID(id);
     }
+
     @GetMapping(path = "/getUserById/{getUserId}")
     public User getUserById(@PathVariable("getUserId") String id) {
         return userS.getUserByID(id);
     }
+
+
     @GetMapping(path = "/findUserByName/{UserName}")
     public List<User> findUserByName(@PathVariable("UserName") String name) {
         return userS.findUserByName(name);
