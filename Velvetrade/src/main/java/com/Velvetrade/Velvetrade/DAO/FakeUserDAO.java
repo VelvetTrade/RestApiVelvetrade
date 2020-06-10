@@ -98,7 +98,7 @@ public class FakeUserDAO implements UserDAO {
     @Override
     public List<User> findUserByName(String name) {
         CollectionReference cr=FirestoreClient.getFirestore().collection("Users");
-        Query q= cr.whereEqualTo("name",name);
+        Query q= cr.whereEqualTo("userName",name);
         ApiFuture<QuerySnapshot> a = q.get();
         List<User> users=new ArrayList<>();
         try {

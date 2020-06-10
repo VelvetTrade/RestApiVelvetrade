@@ -48,8 +48,9 @@ public class MainController {
         groupS.createGroup(group);
     }
     @PutMapping(path = "/update/{groupId}")
-    public void updateGroupById(@PathVariable("groupId") String id,  @NonNull @RequestBody Group g)
+    public void updateGroupById(@PathVariable("groupId") String id, @NonNull @RequestBody Group g)
     {
+        System.out.println("Updated "+ id);
         groupS.updateGroupByID(id,g);
     }
 
