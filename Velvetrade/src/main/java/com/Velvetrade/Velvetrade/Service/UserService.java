@@ -29,6 +29,7 @@ public class UserService {
     }
 
     public User authenticateUser(String username,String password){
+        System.out.println("reached 2");
         return fDAO.authenticateUser(username,password);
     }
 

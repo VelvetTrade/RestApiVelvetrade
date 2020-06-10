@@ -48,7 +48,8 @@ public class FakeUserDAO implements UserDAO {
     public User authenticateUser(String username, String password) {
         List<User> users=findUserByName(username);
         for(User user:users){
-            if(user.getPassword()==password){
+            if(user.getPassword().equals(password)){
+                System.out.println("user password "+user.getPassword()+" "+password);
                 return user;
             }
         }

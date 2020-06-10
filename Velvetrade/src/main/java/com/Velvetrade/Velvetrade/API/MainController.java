@@ -115,6 +115,7 @@ public class MainController {
 
     @GetMapping(path = "/authenticateUser/{username}/{password}")
     public User authenticateUser(@PathVariable("username") String username, @PathVariable("password") String entered_password){
+        System.out.println("reached");
         return userS.authenticateUser(username,entered_password);
     }
 
