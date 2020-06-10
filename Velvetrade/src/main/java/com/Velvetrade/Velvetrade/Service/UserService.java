@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class UserService {
-    FakeUserDAO fDAO;
+     FakeUserDAO fDAO;
 
     @Autowired
     public UserService(@Qualifier("UserDAO") FakeUserDAO fDAO) {
@@ -35,6 +35,7 @@ public class UserService {
 
     //updates user by id
     public int updateUserByID(String id,User user) {
+        user.setId(id);
         return fDAO.updateUserByID(id,user);
     }
 
@@ -48,7 +49,7 @@ public class UserService {
         return fDAO.getUserByID(id);
     }
 
-    //Can be used to searh for a user or sign in a user
+    //Can be used to search for a user or sign in a user
     public List<User> findUserByName(String name) {
         return fDAO.findUserByName(name);
     }
