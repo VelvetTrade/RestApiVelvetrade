@@ -102,6 +102,7 @@ public class User {
         this.itemId = itemId;
         this.notifications = notifications;
         this.groups = groups;
+        this.password=password;
     }
 
     public String getId() {
