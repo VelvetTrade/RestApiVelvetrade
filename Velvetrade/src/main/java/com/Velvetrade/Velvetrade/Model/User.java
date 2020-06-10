@@ -77,7 +77,10 @@ public class User {
             notifications=new ArrayList<String>();
         }
         this.id = id;
-        this.userName = userName;
+
+        if(userName!=null){
+        this.userName = userName;}
+
         this.email = email;
         this.state = state;
         this.streetAddress = streetAddress;

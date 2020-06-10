@@ -11,7 +11,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nonnull;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class MainController {
         groupS.deleteGroupByID(groupId);
     }
     @PostMapping(path = "/createGroup")
-    public void createGroup( @Valid @NonNull @RequestBody Group group)
+    public void createGroup( @NonNull @RequestBody Group group)
     {
         System.out.println("/Called Create Group");
         groupS.createGroup(group);
@@ -127,8 +126,10 @@ public class MainController {
     public int addNewUser( @NonNull @RequestBody User user) {
         return userS.addNewUser(user);
     }
+
     @PutMapping(path = "/updateUserById/{updateUserId}")
     public int updateUserById(@PathVariable("updateUserId") String id,@NonNull@RequestBody User user) {
+
         return userS.updateUserByID(id,user);
     }
     @GetMapping(path = "/getAllPostingsPerUser/{allPostingUserId}")
