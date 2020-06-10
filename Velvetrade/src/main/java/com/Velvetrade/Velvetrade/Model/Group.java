@@ -19,15 +19,15 @@ public class Group {
     private String description;
     //Holds all members ids
     private ArrayList<String> members;
-
-    public Group(@JsonProperty("name")String name,@JsonProperty("password") String password, @JsonProperty("isPrivate")boolean isPrivate,@JsonProperty("description") String description) {
-        this.name = name;
-        this.password = password;
-        this.isPrivate = isPrivate;
-        this.description = description;
-        id= UUID.randomUUID().toString();
-        this.members=new ArrayList<>();
-    }
+//
+//    public Group(@JsonProperty("name")String name,@JsonProperty("password") String password, @JsonProperty("isPrivate")boolean isPrivate,@JsonProperty("description") String description) {
+//        this.name = name;
+//        this.password = password;
+//        this.isPrivate = isPrivate;
+//        this.description = description;
+//        id= UUID.randomUUID().toString();
+//        this.members=new ArrayList<>();
+//    }
 
     public ArrayList<String> getMembers() {
         return members;
@@ -82,8 +82,13 @@ public class Group {
         this.password = password;
         this.isPrivate = isPrivate;
         this.description = description;
-        id= UUID.randomUUID().toString();
-        this.members= (ArrayList<String>) members;
+        if(id==null||id.equals("")){
+        this.id= UUID.randomUUID().toString();}else{
+        this.id=id;}
+        if(members==null){
+           this.members=new ArrayList<>();
+        }else{
+        this.members= (ArrayList<String>) members;}
     }
     public Group(String id, String name, String password, boolean isPrivate, String description) {
         this.id = id;

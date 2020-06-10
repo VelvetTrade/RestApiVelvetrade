@@ -3,6 +3,7 @@ package com.Velvetrade.Velvetrade.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Posting {
@@ -25,16 +26,26 @@ public class Posting {
     //if the posting is an offer instead of a listing
     private boolean isOffer;
 
-    public Posting(@JsonProperty("userId")String userId,@JsonProperty("price") double price,@JsonProperty("description") String description,@JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle,@JsonProperty("isOffer") boolean isOffer, @JsonProperty("acceptedOfferId")String acceptedOfferID) {
+    public Posting(@JsonProperty("id") String id, @JsonProperty("offers") List<String> offers, @JsonProperty("userId")String userId, @JsonProperty("price") double price, @JsonProperty("description") String description, @JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle, @JsonProperty("isOffer") boolean isOffer, @JsonProperty("acceptedOfferId")String acceptedOfferID) {
+        if(id==null){
+            id=UUID.randomUUID().toString();
+        }
+        if(offers==null){
+            offers=new ArrayList<String>();
+        }
+        if(acceptedOfferID==null){
+            acceptedOfferID="";
+        }
+
         this.id = id;
         this.userId = userId;
-        this.offers = offers;
+        this.offers = (ArrayList<String>) offers;
         this.price = price;
         this.description = description;
         this.desiredItems = desiredItems;
         this.itemTitle = itemTitle;
         this.isOffer=isOffer;
-        acceptedOfferID =acceptedOfferID;
+        this.acceptedOfferID =acceptedOfferID;
     }
 
     public boolean isOffer() {
@@ -45,17 +56,17 @@ public class Posting {
         isOffer = offer;
     }
 
-    public Posting(@JsonProperty("userId")String userId,@JsonProperty("price") double price,@JsonProperty("description") String description,@JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle,@JsonProperty("isOffer") boolean isOffer) {
-        this.userId = userId;
-        id= UUID.randomUUID().toString();
-        this.offers = new ArrayList<>();
-        this.price = price;
-        this.description = description;
-        this.desiredItems = desiredItems;
-        this.itemTitle = itemTitle;
-        this.isOffer=isOffer;
-        acceptedOfferID ="";
-    }
+//    public Posting(@JsonProperty("userId")String userId,@JsonProperty("price") double price,@JsonProperty("description") String description,@JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle,@JsonProperty("isOffer") boolean isOffer) {
+//        this.userId = userId;
+//        id= UUID.randomUUID().toString();
+//        this.offers = new ArrayList<>();
+//        this.price = price;
+//        this.description = description;
+//        this.desiredItems = desiredItems;
+//        this.itemTitle = itemTitle;
+//        this.isOffer=isOffer;
+//        acceptedOfferID ="";
+//    }
 
     public String getAcceptedOfferID() {
         return acceptedOfferID;

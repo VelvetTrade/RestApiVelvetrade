@@ -11,11 +11,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nonnull;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/api/v1/trade")
 @RestController
+@CrossOrigin(origins = "*")
 public class MainController {
     private final GroupService groupS;
     private final UserService userS;
@@ -40,7 +42,7 @@ public class MainController {
         groupS.deleteGroupByID(groupId);
     }
     @PostMapping(path = "/createGroup")
-    public void createGroup( @NonNull @RequestBody Group group)
+    public void createGroup( @Valid @NonNull @RequestBody Group group)
     {
         System.out.println("/Called Create Group");
         groupS.createGroup(group);

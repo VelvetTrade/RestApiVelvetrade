@@ -97,8 +97,8 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
     @Override
     public int createGroup(Group group) {
-        Group gr= new Group(group.getName(),group.getPassword(),group.isPrivate(),group.getDescription());
-        ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(group.getId()).set(gr);
+        Group gr= new Group(group.getId(),group.getName(),group.getPassword(),group.isPrivate(),group.getDescription(),group.getMembers());
+        ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(gr.getId()).set(gr);
         FirestoreClient.getFirestore().collection("Groups").document(group.getId()).collection("Chat").document().set(new Chat());
         return 1;
     }
@@ -173,7 +173,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
     @Override
     public void createPosting(String groupId, Posting posting) {
-        Posting p= new Posting(posting.getUserId(),posting.getPrice(),posting.getDescription(),posting.getDesiredItems(),posting.getItemTitle(),posting.isOffer());
+        Posting p= new Posting(posting.getId(),posting.getOffers(),posting.getUserId(),posting.getPrice(),posting.getDescription(),posting.getDesiredItems(),posting.getItemTitle(),posting.isOffer(),posting.getAcceptedOfferID());
         FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(p);
 
     }

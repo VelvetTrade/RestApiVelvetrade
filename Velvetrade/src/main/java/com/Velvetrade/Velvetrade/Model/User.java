@@ -23,14 +23,6 @@ public class User {
     private boolean online;
     //list friend ids
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     private ArrayList<String> friends;
     //list of all offers and listing
     private ArrayList<String> itemId;
@@ -43,22 +35,28 @@ public class User {
     public void User() {
 
     }
-
-    public User(@JsonProperty("username") String userName,@JsonProperty("password") String password ,@JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online) {
-        this.userName = userName;
-        this.email = email;
-        this.state = state;
-        this.password=password;
-        this.streetAddress = streetAddress;
-        this.zip = zip;
-        this.tin = tin;
-        this.online = online;
-        this.notifications = new ArrayList<>();
-        this.friends = new ArrayList<>();
-        this.itemId = new ArrayList<>();
-        this.groups = new ArrayList<>();
-        id = UUID.randomUUID().toString();
+    public String getPassword() {
+        return password;
     }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+//    public User(@JsonProperty("username") String userName,@JsonProperty("password") String password ,@JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online) {
+//        this.userName = userName;
+//        this.email = email;
+//        this.state = state;
+//        this.password=password;
+//        this.streetAddress = streetAddress;
+//        this.zip = zip;
+//        this.tin = tin;
+//        this.online = online;
+//        this.notifications = new ArrayList<>();
+//        this.friends = new ArrayList<>();
+//        this.itemId = new ArrayList<>();
+//        this.groups = new ArrayList<>();
+//        id = UUID.randomUUID().toString();
+//    }
 
     public User(String username) {
         this.userName = userName;
@@ -76,7 +74,22 @@ public class User {
 
     }
 
-    public User(@JsonProperty("username") String userName,@JsonProperty("password") String password , @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online, @JsonProperty("friends") ArrayList<String> friends, @JsonProperty("items") ArrayList<String> itemId, @JsonProperty("notifications") ArrayList<String> notifications, @JsonProperty("groups") ArrayList<String> groups) {
+    public User(@JsonProperty("id") String id,@JsonProperty("username") String userName,@JsonProperty("password") String password , @JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online, @JsonProperty("friends") ArrayList<String> friends, @JsonProperty("items") ArrayList<String> itemId, @JsonProperty("notifications") ArrayList<String> notifications, @JsonProperty("groups") ArrayList<String> groups) {
+        if(id==null){
+           id=UUID.randomUUID().toString();
+        }
+        if(groups==null){
+            groups=new ArrayList<String>();
+        }
+        if(itemId==null){
+            itemId=new ArrayList<String>();
+        }
+        if(friends==null){
+            friends=new ArrayList<String>();
+        }
+        if(notifications==null){
+            notifications=new ArrayList<String>();
+        }
         this.id = id;
         this.userName = userName;
         this.email = email;
