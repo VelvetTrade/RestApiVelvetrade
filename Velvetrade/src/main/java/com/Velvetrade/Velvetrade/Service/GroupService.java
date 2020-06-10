@@ -97,8 +97,9 @@ public class GroupService {
     }
 
     //Validates if a User can enter a group
-    public boolean validateUserEntry(String groupID,String entered_password){
-        return gDao.validateUserEntry(groupID,entered_password);
+    public boolean validateUserEntry(String groupId, String userId, String entered_password){
+
+        return gDao.validateUserEntry(groupId,userId,entered_password);
     }
     //Removes a specific user from a group
     public int removeUserByID(String groupID,String userID){

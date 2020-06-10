@@ -100,9 +100,14 @@ public class MainController {
     {
         return groupS.updatePosting(id,posting);
     }
-    @GetMapping(path = "/validateUserEntry/{validateId}/{validatePass}")
-    public boolean validateUserEntry(@PathVariable("validateId") String groupID, @PathVariable("validatePass") String entered_password){
-        return groupS.validateUserEntry(groupID,entered_password);
+    @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
+    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password){
+
+        boolean b= groupS.validateUserEntry(groupID,userID,entered_password);
+        if(b){
+        User u=getUserById(userID);
+        u.getGroups().add(groupID);}
+        return b;
     }
 
     @GetMapping(path = "/authenticateUser/{username}/{password}")

@@ -12,7 +12,7 @@ public interface GroupDAO {
     public int deleteGroupByID(String id);
     public int createGroup(Group group);
 
-    public boolean validateUserEntry(String groupID,String entered_password);
+    public boolean validateUserEntry(String groupID,String userId,String entered_password);
     public int removeUserByID(String groupID,String userID);
 
 

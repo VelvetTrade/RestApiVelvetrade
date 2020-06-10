@@ -104,8 +104,11 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     }
 
     @Override
-    public boolean validateUserEntry(String groupID, String entered_password) {
+    public boolean validateUserEntry(String groupID,String userId ,String entered_password) {
         Group g=getGroupByID(groupID);
+        if(g.getPassword()==entered_password){
+        g.getMembers().add(userId);
+        updateGroupByID(groupID,g);}
         return g.getPassword()==entered_password;
     }
 
