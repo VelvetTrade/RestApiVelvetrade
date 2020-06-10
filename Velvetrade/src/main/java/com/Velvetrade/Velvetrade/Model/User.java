@@ -92,7 +92,6 @@ public class User {
         this.online = online;
 //        this.zip = zip;
 
-//        this.userName = userName;
 //        this.email = email;
 //        this.state = state;
 //        this.streetAddress = streetAddress;
@@ -132,6 +131,7 @@ public class User {
         {
             this.tin = tin;
         }
+//        this.userName = userName;
     }
 
     public String getId() {
