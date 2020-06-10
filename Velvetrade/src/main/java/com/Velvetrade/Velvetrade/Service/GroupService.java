@@ -42,8 +42,9 @@ public class GroupService {
 
         gDao.createGroup(group);
     }
-///Updates Group by ID
+    ///Updates Group by ID
     public void updateGroupByID(String id, Group g){
+        g.setId(id);
         gDao.updateGroupByID(id,g);
     }
     //Gets the one chat per group
@@ -57,6 +58,7 @@ public class GroupService {
 
     //update chat
     public void updateChatByID(String id,Chat c){
+        c.setId(id);
         gDao.updateChat(id,c);
     }
 
@@ -105,5 +107,4 @@ public class GroupService {
     public int removeUserByID(String groupID,String userID){
         return gDao.removeUserByID(groupID,userID);
     }
-
 }
