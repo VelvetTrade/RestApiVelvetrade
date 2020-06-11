@@ -26,21 +26,15 @@ public class FakeUserDAO implements UserDAO {
     }
 
     @Override
-    public List<Posting> getAllPostingsPerUser(String id) {
-
-        List<Posting> o=new ArrayList<>();
+    public List<Posting> getAllPostingsPerUser(String id) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-
-        try {
-            QuerySnapshot qs=dbFirestore.collectionGroup("Postings").whereEqualTo("userId",id).get().get();
-            o=qs.toObjects(Posting.class);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        User u=getUserByID(id);
+        List<Posting> l= new ArrayList<>();
+        for(String ids:u.getGroups()){
+            l.addAll( dbFirestore.collection("Groups").document(ids).collection("Postings").
+                    whereEqualTo("userId",id).get().get().toObjects(Posting.class));
         }
-
-        return o;
+        return l;
     }
     @Override
     public User authenticateUser(String username, String password) {

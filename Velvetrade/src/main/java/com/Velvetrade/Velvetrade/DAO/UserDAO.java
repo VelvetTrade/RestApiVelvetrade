@@ -5,6 +5,7 @@ import com.Velvetrade.Velvetrade.Model.Posting;
 import com.Velvetrade.Velvetrade.Model.User;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface UserDAO {
     public int addNewUser(User user);
@@ -12,6 +13,6 @@ public interface UserDAO {
     public int deleteUserByID(String id);
     public User getUserByID(String id) throws IdNotFoundException;
     public List<User> findUserByName(String name);
-    public List<Posting> getAllPostingsPerUser(String id);
+    public List<Posting> getAllPostingsPerUser(String id) throws ExecutionException, InterruptedException;
     public User authenticateUser(String username,String password);
 }

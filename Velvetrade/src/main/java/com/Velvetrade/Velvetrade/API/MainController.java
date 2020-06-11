@@ -86,16 +86,19 @@ public class MainController {
     public Posting getPostingById(@PathVariable("groupId") String id,@PathVariable("gPostingId") String postingId) throws IdNotFoundException {
         return groupS.getPostingByID(id,postingId);
     }
+    @CrossOrigin
     @DeleteMapping(path = "/deletePosting/{groupId}/{postingId}")
     public int deletePosting(@PathVariable("groupId") String id,@PathVariable("postingId") String postingId)
     {
         return groupS.deletePosting(id,postingId);
     }
+    @CrossOrigin
     @PutMapping(path = "/updatePosting/{updatePostingId}")
     public int updatePosting(@PathVariable("updatePostingId") String id,@NonNull  @RequestBody Posting posting)
     {
         return groupS.updatePosting(id,posting);
     }
+
     @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
     public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException {
 
@@ -111,7 +114,7 @@ public class MainController {
         System.out.println("reached");
         return userS.authenticateUser(username,entered_password);
     }
-
+    @CrossOrigin
     @DeleteMapping(path = "/removeUserFromGroupById/{groupId}/{UserId}")
     public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID) throws IdNotFoundException {
         return groupS.removeUserByID(groupID,userID);
@@ -123,21 +126,24 @@ public class MainController {
             throw new InvalidNewUserException();
         }
     }
-
+    @CrossOrigin
     @PutMapping(path = "/updateUserById/{updateUserId}")
     public int updateUserById(@PathVariable("updateUserId") String id,@NonNull@RequestBody User user) {
 
         return userS.updateUserByID(id,user);
     }
+    @CrossOrigin
     @GetMapping(path = "/getAllPostingsPerUser/{allPostingUserId}")
     public List<Posting> getAllPostingsPerUser(@PathVariable("allPostingUserId") String userID){
         return userS.getAllPostingsPerUser(userID);
     }
+    @CrossOrigin
     @DeleteMapping(path = "/deleteUserById/{deleteUserId}")
     public int deleteUserById(@PathVariable("deleteUserId") String id) {
         return userS.deleteUserByID(id);
     }
 
+    @CrossOrigin
     @GetMapping(path = "/getUserById/{getUserId}")
     public User getUserById(@PathVariable("getUserId") String id) throws IdNotFoundException {
         return userS.getUserByID(id);
