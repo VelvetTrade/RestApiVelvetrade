@@ -40,10 +40,12 @@ public class MainController {
     }
     @CrossOrigin
     @PostMapping(path = "/createGroup/{userId}")
-    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group)
-    {
+    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group) throws IdNotFoundException {
         System.out.println("/Called Create Group");
-      return  groupS.createGroup(userId,group);
+        User u=getUserById(userId);
+       Group g=groupS.createGroup(userId,group);
+        u.getGroups().add(g.getId());
+      return g;
     }
     @CrossOrigin
     @PutMapping(path = "/update/{groupId}")
@@ -135,7 +137,8 @@ public class MainController {
         boolean b= groupS.validateUserEntry(groupID,userID,entered_password);
         if(b){
         User u=getUserById(userID);
-        u.getGroups().add(groupID);}else{throw new InvalidNewUserException();}
+        u.getGroups().add(groupID);
+        updateUserById(userID,u);}else{throw new InvalidNewUserException();}
         return b;
     }
     @CrossOrigin
