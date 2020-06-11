@@ -15,11 +15,20 @@ import java.util.concurrent.ExecutionException;
 
 @Repository("GroupDAO")
 public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
-
-
+String current = "";
     @Override
     public void updateChat(String id, Chat chat) {
-        FirestoreClient.getFirestore().collection("Groups").document(id).collection("Chat").document().set(chat);
+        try{
+            Chat c = getChatByGroup(id);
+            Chat e = new Chat(id,(chat.getUserNames()==null?c.getUserNames():chat.getUserNames()),
+                    (chat.getMessages()==null?c.getMessages():chat.getMessages()));
+            Firestore dbFirestore = FirestoreClient.getFirestore();
+            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Groups").document(id).collection("Chat").document().set(e);
+        }catch(Exception e)
+        {
+
+        }
+       // FirestoreClient.getFirestore().collection("Groups").document(id).collection("Chat").document().set(chat);
 
     }
 
@@ -70,28 +79,33 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     }
 
     @Override
-    public Group getGroupByID(String id) throws IdNotFoundException {
+    public Group getGroupByID(String id) {
         ApiFuture<DocumentSnapshot> ds = FirestoreClient.getFirestore().collection("Groups").document(id).get();
         try {
-            Group g=ds.get().toObject(Group.class);
-            if(g==null){
-                throw new IdNotFoundException();
-            }
-            return g;
+            return ds.get().toObject(Group.class);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        throw new IdNotFoundException();
-
+        return null;
     }
 
     @Override
     public int updateGroupByID(String id, Group group) {
-
-        ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(id).set(group);
-
+        try{
+            Group g = getGroupByID(id);
+            Group e = new Group(id,(group.getName()==null?g.getName():group.getName()),
+                    (group.getPassword()==null?g.getPassword():group.getPassword()),
+                    group.isPrivate(),(group.getDescription()==null?g.getPassword():group.getPassword()),
+                    (group.getMembers()==null?g.getMembers():group.getMembers()));
+            Firestore dbFirestore = FirestoreClient.getFirestore();
+            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Groups").document(id).set(e);
+        }catch(Exception e)
+        {
+            return 0;
+        }
+       // ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(id).set(group);
         return 1;
     }
 
@@ -110,16 +124,16 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     }
 
     @Override
-    public boolean validateUserEntry(String groupID,String userId ,String entered_password) throws IdNotFoundException {
+    public boolean validateUserEntry(String groupID,String userId ,String entered_password) {
         Group g=getGroupByID(groupID);
         if(g.getPassword()==entered_password){
-        g.getMembers().add(userId);
-        updateGroupByID(groupID,g);}
+            g.getMembers().add(userId);
+            updateGroupByID(groupID,g);}
         return g.getPassword()==entered_password;
     }
 
     @Override
-    public int removeUserByID(String groupID, String userID) throws IdNotFoundException {
+    public int removeUserByID(String groupID, String userID) {
         Group g = getGroupByID(groupID);
         boolean b = g.getMembers().remove(userID);
         updateGroupByID(groupID, g);
@@ -134,7 +148,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
         for (DocumentReference dr : ds) {
             try {
                 if(dr.get().get().getString("acceptedOfferID").equals("")&&dr.get().get().getBoolean("isOffer")==true){
-                a.add(dr.get().get().toObject(Posting.class));}
+                    a.add(dr.get().get().toObject(Posting.class));}
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -146,14 +160,10 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
 
     @Override
-    public Posting getPostingByID(String id,String postingId) throws IdNotFoundException {
+    public Posting getPostingByID(String id,String postingId) {
 
         try {
-           Posting p=FirestoreClient.getFirestore().collection("Groups").document(id).collection("Postings").document(postingId).get().get().toObject(Posting.class);
-        if(p==null){
-            throw new IdNotFoundException();
-        }
-        return p;
+            return FirestoreClient.getFirestore().collection("Groups").document(id).collection("Postings").document(postingId).get().get().toObject(Posting.class);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -161,7 +171,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
         }
 
 
-        throw new IdNotFoundException();
+        return null;
     }
 
     @Override
@@ -175,8 +185,17 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
     @Override
     public int updatePosting(String groupId, Posting posting) {
-
-            FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(posting);
+        try{
+            current = getGroupByID(groupId).getId();
+            Posting p = getPostingByID(groupId,current);
+            Posting e = new Posting(groupId,posting.getOffers(),posting.getUserId(),(posting.getPrice()==0?p.getPrice():posting.getPrice()),(posting.getDescription()==null?p.getDescription():posting.getDescription()),(posting.getDesiredItems()==null?p.getDesiredItems():posting.getDesiredItems()), (posting.getItemTitle()==null?p.getItemTitle():posting.getItemTitle()), posting.isOffer(), posting.getAcceptedOfferID());
+            Firestore dbFirestore = FirestoreClient.getFirestore();
+            ApiFuture<WriteResult> ndoc = dbFirestore.collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(e);
+        }catch(Exception e)
+        {
+            return 0;
+        }
+        //FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(posting);
 
         return 1;
     }
