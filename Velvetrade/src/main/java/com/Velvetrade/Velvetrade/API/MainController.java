@@ -69,13 +69,18 @@ public class MainController {
 
 //////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping(path = "/createNewPosting/{groupId}")
-    public Posting createNewPosting(@NonNull @PathVariable("groupId") String groupId, @NonNull @RequestBody Posting posting)
+    public Posting createNewPosting(@NonNull @PathVariable("groupId") String groupId, @NonNull @RequestBody Posting posting) throws IdNotFoundException {       if (posting.isOffer())
     {
+        Posting p = getPostingById(groupId, posting.getAcceptedOfferID());
+        p.getOffers().add(posting.getId());
+        updatePosting(p.getId(),p);
+    }
         return groupS.createNewPosting(groupId,posting);
     }
     @GetMapping(path = "/getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
     {
+
         return groupS.getAllPostingsPerGroup(groupId);
     }
     @GetMapping(path = "/searchByName/{searchName}")
@@ -98,6 +103,13 @@ public class MainController {
     public int updatePosting(@PathVariable("updatePostingId") String id,@NonNull  @RequestBody Posting posting)
     {
         return groupS.updatePosting(id,posting);
+    }
+    @PostMapping(path = "/acceptTrade/{acceptGroupId}/{acceptPostingId}/{acceptOfferId}")
+    public void acceptTrade(@NonNull @PathVariable("acceptGroupId") String groupId,
+                            @NonNull @PathVariable("acceptPostingId") String postingId,
+                            @NonNull @PathVariable("acceptOfferId") String offerId) throws IdNotFoundException
+    {
+        groupS.acceptTrade(groupId,postingId,offerId);
     }
 
     @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
