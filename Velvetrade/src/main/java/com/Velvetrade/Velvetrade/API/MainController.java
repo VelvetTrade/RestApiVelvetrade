@@ -130,12 +130,12 @@ public class MainController {
     }
     @CrossOrigin
     @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
-    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException {
+    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException, InvalidNewUserException {
 
         boolean b= groupS.validateUserEntry(groupID,userID,entered_password);
         if(b){
         User u=getUserById(userID);
-        u.getGroups().add(groupID);}
+        u.getGroups().add(groupID);}else{throw new InvalidNewUserException();}
         return b;
     }
     @CrossOrigin
