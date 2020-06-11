@@ -147,6 +147,9 @@ public class MainController {
     @CrossOrigin
     @DeleteMapping(path = "/removeUserFromGroupById/{groupId}/{UserId}")
     public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID) throws IdNotFoundException {
+        User u=getUserById(userID);
+        u.getGroups().remove(groupID);
+        updateUserById(u.getId(),u);
         return groupS.removeUserByID(groupID,userID);
     }
     @CrossOrigin
