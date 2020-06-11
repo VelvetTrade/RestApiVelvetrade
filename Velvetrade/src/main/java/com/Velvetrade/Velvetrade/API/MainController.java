@@ -173,6 +173,12 @@ public class MainController {
         return userS.getUserByID(id);
     }
 
+    @CrossOrigin
+    @GetMapping(path = "/getUsersByIds/{getUserId}")
+    public List<User> getUserById(@PathVariable("getUserId") List<String> id) throws IdNotFoundException {
+        return userS.getUsersByIDs(id);
+    }
+
 
     @GetMapping(path = "/findUserByName/{UserName}")
     public List<User> findUserByName(@PathVariable("UserName") String name) {

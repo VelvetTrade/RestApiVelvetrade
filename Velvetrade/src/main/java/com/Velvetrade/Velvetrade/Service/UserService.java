@@ -56,5 +56,9 @@ public class UserService {
     public List<User> findUserByName(String name) {
         return fDAO.findUserByName(name);
     }
+
+    public List<User> getUsersByIDs(List<String> id) {
+        return fDAO.getUsersByIDs(id);
+    }
 }
 

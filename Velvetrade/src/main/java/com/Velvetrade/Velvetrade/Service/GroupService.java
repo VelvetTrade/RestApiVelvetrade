@@ -85,6 +85,7 @@ public class GroupService {
         p.setAcceptedOfferID(offerID);
         Posting po=getPostingByID(groupId,offerID);
         po.setAcceptedOfferID(postingID);
+        updatePosting(groupId,p);
     }
 
     //gets a specific posting from a specific group

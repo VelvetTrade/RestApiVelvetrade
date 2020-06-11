@@ -116,4 +116,13 @@ public class FakeUserDAO implements UserDAO {
         }
         return users;
     }
+
+    public List<User> getUsersByIDs(List<String> id) {
+          List<User> u= new ArrayList<>();
+          for(String i:id){
+             u.add(getUserByID(i));
+
+          }
+          return u;
+    }
 }
