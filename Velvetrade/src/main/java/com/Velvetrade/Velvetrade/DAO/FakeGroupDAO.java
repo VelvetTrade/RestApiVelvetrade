@@ -115,11 +115,12 @@ String current = "";
     }
 
     @Override
-    public int createGroup(Group group) {
+    public Group createGroup(Group group) {
         Group gr= new Group(group.getId(),group.getName(),group.getPassword(),group.isPrivate(),group.getDescription(),group.getMembers());
         ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(gr.getId()).set(gr);
         FirestoreClient.getFirestore().collection("Groups").document(group.getId()).collection("Chat").document().set(new Chat());
-        return 1;
+
+        return gr;
     }
 
     @Override
@@ -200,9 +201,9 @@ String current = "";
     }
 
     @Override
-    public void createPosting(String groupId, Posting posting) {
+    public Posting createPosting(String groupId, Posting posting) {
         Posting p= new Posting(posting.getId(),posting.getOffers(),posting.getUserId(),posting.getPrice(),posting.getDescription(),posting.getDesiredItems(),posting.getItemTitle(),posting.isOffer(),posting.getAcceptedOfferID());
         FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(p);
-
+        return p;
     }
 }

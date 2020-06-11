@@ -11,6 +11,6 @@ public interface PostingDAO {
     public Posting getPostingByID(String groupId,String postingId) throws IdNotFoundException;
     public int deletePosting(String groupId,String postingId);
     public int updatePosting(String id,Posting posting);
-    public void createPosting(String groupID,Posting posting);
+    public Posting createPosting(String groupID, Posting posting);
 }
 

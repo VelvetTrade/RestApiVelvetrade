@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class UserService {
      FakeUserDAO fDAO;
@@ -20,12 +22,12 @@ public class UserService {
     }
 
     //Adds a user
-    public int addNewUser(User user) {
+    public User addNewUser(User user) {
         return fDAO.addNewUser(user);
 
     }
     //gets all the postings of a user
-    public List<Posting> getAllPostingsPerUser(String id){
+    public List<Posting> getAllPostingsPerUser(String id) throws ExecutionException, InterruptedException {
         return fDAO.getAllPostingsPerUser(id);
     }
 

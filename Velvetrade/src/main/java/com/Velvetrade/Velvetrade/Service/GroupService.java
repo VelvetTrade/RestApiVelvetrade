@@ -39,9 +39,9 @@ public class GroupService {
     }
 
     //creates group
-    public void createGroup(Group group){
+    public Group createGroup(Group group){
 
-        gDao.createGroup(group);
+      return  gDao.createGroup(group);
     }
     ///Updates Group by ID
     public void updateGroupByID(String id, Group g){
@@ -64,9 +64,9 @@ public class GroupService {
     }
 
     //creates a new trade listing
-    public void createNewPosting(String groupID, Posting p){
+    public Posting createNewPosting(String groupID, Posting p){
 
-        gDao.createPosting(groupID,p);
+        return gDao.createPosting(groupID,p);
 
     }
     //gets all listings in a group where the offerings have not been accepted

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @RequestMapping("/api/v1/trade")
 @RestController
@@ -36,10 +37,10 @@ public class MainController {
         groupS.deleteGroupByID(groupId);
     }
     @PostMapping(path = "/createGroup")
-    public void createGroup( @NonNull @RequestBody Group group)
+    public Group createGroup(@NonNull @RequestBody Group group)
     {
         System.out.println("/Called Create Group");
-        groupS.createGroup(group);
+      return  groupS.createGroup(group);
     }
     @PutMapping(path = "/update/{groupId}")
     public void updateGroupById(@PathVariable("groupId") String id, @NonNull @RequestBody Group g)
@@ -68,9 +69,9 @@ public class MainController {
 
 //////////////////////////////////////////////////////////////////////////////////////////
     @PostMapping(path = "/createNewPosting/{groupId}")
-    public void createNewPosting(@NonNull @PathVariable("groupId") String groupId,@NonNull @RequestBody Posting posting)
+    public Posting createNewPosting(@NonNull @PathVariable("groupId") String groupId, @NonNull @RequestBody Posting posting)
     {
-        groupS.createNewPosting(groupId,posting);
+        return groupS.createNewPosting(groupId,posting);
     }
     @GetMapping(path = "/getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
@@ -120,7 +121,7 @@ public class MainController {
         return groupS.removeUserByID(groupID,userID);
     }
     @PostMapping(path = "/addNewUser")
-    public int addNewUser( @NonNull @RequestBody User user) throws  InvalidNewUserException {
+    public User addNewUser( @NonNull @RequestBody User user) throws  InvalidNewUserException {
         if(user.getPassword()!=null&&!user.getPassword().equals("")&&user.getUserName()!=null&& !user.getUserName().equals("")){
         return userS.addNewUser(user);}else{
             throw new InvalidNewUserException();
@@ -134,7 +135,7 @@ public class MainController {
     }
     @CrossOrigin
     @GetMapping(path = "/getAllPostingsPerUser/{allPostingUserId}")
-    public List<Posting> getAllPostingsPerUser(@PathVariable("allPostingUserId") String userID){
+    public List<Posting> getAllPostingsPerUser(@PathVariable("allPostingUserId") String userID) throws ExecutionException, InterruptedException {
         return userS.getAllPostingsPerUser(userID);
     }
     @CrossOrigin

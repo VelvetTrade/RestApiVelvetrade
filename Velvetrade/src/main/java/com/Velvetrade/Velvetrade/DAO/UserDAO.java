@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface UserDAO {
-    public int addNewUser(User user);
+    public User addNewUser(User user);
     public int updateUserByID(String id,User user);
     public int deleteUserByID(String id);
     public User getUserByID(String id) throws IdNotFoundException;
