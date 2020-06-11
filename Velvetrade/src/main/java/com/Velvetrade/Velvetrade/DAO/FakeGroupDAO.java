@@ -177,7 +177,12 @@ String current = "";
 
     @Override
     public int deletePosting(String groupId,String postingId) {
-
+        Posting p=getPostingByID(groupId,postingId);
+        if(p.isOffer()){
+         Posting l=   getPostingByID(groupId,p.getAcceptedOfferID());
+         l.getOffers().remove(postingId);
+         updatePosting(groupId,l);
+        }
         FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(postingId).delete();
 
         return 0;
