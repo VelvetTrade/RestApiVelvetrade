@@ -1,19 +1,20 @@
 package com.Velvetrade.Velvetrade.DAO;
 
 import com.Velvetrade.Velvetrade.Model.Group;
+import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 
 import java.util.List;
 
 public interface GroupDAO {
 
     public List<Group> searchByName(String search);
-    public Group getGroupByID(String id);
+    public Group getGroupByID(String id) throws IdNotFoundException;
     public int updateGroupByID(String id,Group group);
     public int deleteGroupByID(String id);
     public int createGroup(Group group);
 
-    public boolean validateUserEntry(String groupID,String userId,String entered_password);
-    public int removeUserByID(String groupID,String userID);
+    public boolean validateUserEntry(String groupID,String userId,String entered_password) throws IdNotFoundException;
+    public int removeUserByID(String groupID,String userID) throws IdNotFoundException;
 
 
 

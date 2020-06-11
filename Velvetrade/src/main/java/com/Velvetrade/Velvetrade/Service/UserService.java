@@ -1,6 +1,7 @@
 package com.Velvetrade.Velvetrade.Service;
 
 import com.Velvetrade.Velvetrade.DAO.FakeUserDAO;
+import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 import com.Velvetrade.Velvetrade.Model.Posting;
 import com.Velvetrade.Velvetrade.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class UserService {
     }
 
     //gets a user by id
-    public User getUserByID(String id) {
+    public User getUserByID(String id) throws IdNotFoundException {
         return fDAO.getUserByID(id);
     }
 

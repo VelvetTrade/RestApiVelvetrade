@@ -2,6 +2,7 @@ package com.Velvetrade.Velvetrade.DAO;
 
 import com.Velvetrade.Velvetrade.Model.Chat;
 import com.Velvetrade.Velvetrade.Model.Group;
+import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 import com.Velvetrade.Velvetrade.Model.Posting;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -69,16 +70,21 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     }
 
     @Override
-    public Group getGroupByID(String id) {
+    public Group getGroupByID(String id) throws IdNotFoundException {
         ApiFuture<DocumentSnapshot> ds = FirestoreClient.getFirestore().collection("Groups").document(id).get();
         try {
-            return ds.get().toObject(Group.class);
+            Group g=ds.get().toObject(Group.class);
+            if(g==null){
+                throw new IdNotFoundException();
+            }
+            return g;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new IdNotFoundException();
+
     }
 
     @Override
@@ -104,7 +110,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     }
 
     @Override
-    public boolean validateUserEntry(String groupID,String userId ,String entered_password) {
+    public boolean validateUserEntry(String groupID,String userId ,String entered_password) throws IdNotFoundException {
         Group g=getGroupByID(groupID);
         if(g.getPassword()==entered_password){
         g.getMembers().add(userId);
@@ -113,7 +119,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
     }
 
     @Override
-    public int removeUserByID(String groupID, String userID) {
+    public int removeUserByID(String groupID, String userID) throws IdNotFoundException {
         Group g = getGroupByID(groupID);
         boolean b = g.getMembers().remove(userID);
         updateGroupByID(groupID, g);
@@ -140,10 +146,14 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
 
     @Override
-    public Posting getPostingByID(String id,String postingId) {
+    public Posting getPostingByID(String id,String postingId) throws IdNotFoundException {
 
         try {
-           return FirestoreClient.getFirestore().collection("Groups").document(id).collection("Postings").document(postingId).get().get().toObject(Posting.class);
+           Posting p=FirestoreClient.getFirestore().collection("Groups").document(id).collection("Postings").document(postingId).get().get().toObject(Posting.class);
+        if(p==null){
+            throw new IdNotFoundException();
+        }
+        return p;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -151,7 +161,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
         }
 
 
-        return null;
+        throw new IdNotFoundException();
     }
 
     @Override

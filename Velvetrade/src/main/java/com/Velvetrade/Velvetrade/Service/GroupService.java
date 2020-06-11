@@ -3,6 +3,7 @@ package com.Velvetrade.Velvetrade.Service;
 import com.Velvetrade.Velvetrade.DAO.FakeGroupDAO;
 import com.Velvetrade.Velvetrade.Model.Chat;
 import com.Velvetrade.Velvetrade.Model.Group;
+import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 import com.Velvetrade.Velvetrade.Model.Posting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,10 +23,10 @@ public class GroupService {
 
     }
     //Gets group by id
-    public Group getGroupByID(String groupId) {
+    public Group getGroupByID(String groupId) throws IdNotFoundException {
         return gDao.getGroupByID(groupId);
     }
-    public ArrayList<Group> getAllGroupsFromIds(ArrayList<String> ids){
+    public ArrayList<Group> getAllGroupsFromIds(ArrayList<String> ids) throws IdNotFoundException {
         ArrayList<Group> a= new ArrayList<>();
         for(String id:ids){
             a.add(gDao.getGroupByID(id));
@@ -78,7 +79,7 @@ public class GroupService {
         return gDao.searchByName(s);
     }
     //Accepts trades
-    public void acceptTrade(String groupId,String postingID,String offerID){
+    public void acceptTrade(String groupId,String postingID,String offerID) throws IdNotFoundException {
         Posting p=getPostingByID(groupId,postingID);
         p.setAcceptedOfferID(offerID);
         Posting po=getPostingByID(groupId,offerID);
@@ -86,7 +87,7 @@ public class GroupService {
     }
 
     //gets a specific posting from a specific group
-    public Posting getPostingByID(String groupId, String postingId){
+    public Posting getPostingByID(String groupId, String postingId) throws IdNotFoundException {
         return gDao.getPostingByID(groupId,postingId);
     }
     //deletes a specific posting from a specific group
@@ -99,12 +100,12 @@ public class GroupService {
     }
 
     //Validates if a User can enter a group
-    public boolean validateUserEntry(String groupId, String userId, String entered_password){
+    public boolean validateUserEntry(String groupId, String userId, String entered_password) throws IdNotFoundException {
 
         return gDao.validateUserEntry(groupId,userId,entered_password);
     }
     //Removes a specific user from a group
-    public int removeUserByID(String groupID,String userID){
+    public int removeUserByID(String groupID,String userID) throws IdNotFoundException {
         return gDao.removeUserByID(groupID,userID);
     }
 }

@@ -1,9 +1,6 @@
 package com.Velvetrade.Velvetrade.API;
 
-import com.Velvetrade.Velvetrade.Model.Chat;
-import com.Velvetrade.Velvetrade.Model.Group;
-import com.Velvetrade.Velvetrade.Model.Posting;
-import com.Velvetrade.Velvetrade.Model.User;
+import com.Velvetrade.Velvetrade.Model.*;
 import com.Velvetrade.Velvetrade.Service.GroupService;
 import com.Velvetrade.Velvetrade.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +23,11 @@ public class MainController {
         this.userS = userService;
     }
     @GetMapping(path = "/getGroup/{groupId}")
-    public Group GetGroupById(@PathVariable("groupId") String groupId)
-    {   System.out.println("Called Get Group");
+    public Group GetGroupById(@PathVariable("groupId") String groupId) throws IdNotFoundException {   System.out.println("Called Get Group");
         return groupS.getGroupByID(groupId);
     }
     @GetMapping(path = "/getGroups/{groupIds}")
-    public ArrayList<Group> getAllGroupsFromIds( @PathVariable("groupIds") ArrayList<String> ids)
-    {
+    public ArrayList<Group> getAllGroupsFromIds( @PathVariable("groupIds") ArrayList<String> ids) throws IdNotFoundException {
         return groupS.getAllGroupsFromIds(ids);//maybe change the method in the service to return optional variable to add .orElse();
     }
     @DeleteMapping(path = "/deleteGroup/{groupId}")
@@ -72,10 +67,10 @@ public class MainController {
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-    @PostMapping(path = "/createNewPosting")
-    public void createNewPosting(@NonNull @RequestBody Posting posting)
+    @PostMapping(path = "/createNewPosting/{groupId}")
+    public void createNewPosting(@NonNull @PathVariable("groupId") String groupId,@NonNull @RequestBody Posting posting)
     {
-        groupS.createNewPosting(posting.getId(),posting);
+        groupS.createNewPosting(groupId,posting);
     }
     @GetMapping(path = "/getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
@@ -88,8 +83,7 @@ public class MainController {
         return groupS.searchByName(name);
     }
     @GetMapping(path = "/getPostingById/{groupId}/{gPostingId}")
-    public Posting getPostingById(@PathVariable("groupId") String id,@PathVariable("gPostingId") String postingId)
-    {
+    public Posting getPostingById(@PathVariable("groupId") String id,@PathVariable("gPostingId") String postingId) throws IdNotFoundException {
         return groupS.getPostingByID(id,postingId);
     }
     @DeleteMapping(path = "/deletePosting/{groupId}/{postingId}")
@@ -103,7 +97,7 @@ public class MainController {
         return groupS.updatePosting(id,posting);
     }
     @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
-    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password){
+    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException {
 
         boolean b= groupS.validateUserEntry(groupID,userID,entered_password);
         if(b){
@@ -119,7 +113,7 @@ public class MainController {
     }
 
     @DeleteMapping(path = "/removeUserFromGroupById/{groupId}/{UserId}")
-    public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID){
+    public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID) throws IdNotFoundException {
         return groupS.removeUserByID(groupID,userID);
     }
     @PostMapping(path = "/addNewUser")
@@ -142,7 +136,7 @@ public class MainController {
     }
 
     @GetMapping(path = "/getUserById/{getUserId}")
-    public User getUserById(@PathVariable("getUserId") String id) {
+    public User getUserById(@PathVariable("getUserId") String id) throws IdNotFoundException {
         return userS.getUserByID(id);
     }
 

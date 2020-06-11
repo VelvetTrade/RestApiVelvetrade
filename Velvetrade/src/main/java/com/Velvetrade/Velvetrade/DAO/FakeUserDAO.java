@@ -1,5 +1,6 @@
 package com.Velvetrade.Velvetrade.DAO;
 
+import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 import com.Velvetrade.Velvetrade.Model.Posting;
 import com.Velvetrade.Velvetrade.Model.User;
 import com.google.api.core.ApiFuture;
@@ -85,20 +86,24 @@ public class FakeUserDAO implements UserDAO {
     }
 
     @Override
-    public User getUserByID(String id) {
+    public User getUserByID(String id) throws IdNotFoundException {
         DocumentReference dr=FirestoreClient.getFirestore().collection("Users").document(id);
         ApiFuture<DocumentSnapshot> future = dr.get();
         try {
             DocumentSnapshot ds=future.get();
             if(ds.exists()){
                 return ds.toObject(User.class);
+            }else{
+                throw new IdNotFoundException();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } catch (IdNotFoundException e) {
+            e.printStackTrace();
         }
-        return null;
+        throw new IdNotFoundException();
     }
 
     @Override
