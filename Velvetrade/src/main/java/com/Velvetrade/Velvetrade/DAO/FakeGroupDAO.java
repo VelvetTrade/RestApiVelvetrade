@@ -127,10 +127,10 @@ String current = "";
     @Override
     public boolean validateUserEntry(String groupID,String userId ,String entered_password) {
         Group g=getGroupByID(groupID);
-        if(!g.isPrivate()||g.getPassword()==entered_password){
+        if(g.isPrivate()||g.getPassword()==entered_password){
             g.getMembers().add(userId);
             updateGroupByID(groupID,g);}
-        return !g.isPrivate()||g.getPassword()==entered_password;
+        return g.isPrivate()||g.getPassword()==entered_password;
     }
 
     @Override
