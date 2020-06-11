@@ -23,25 +23,30 @@ public class MainController {
         this.groupS = groupService;
         this.userS = userService;
     }
+    @CrossOrigin
     @GetMapping(path = "/getGroup/{groupId}")
     public Group GetGroupById(@PathVariable("groupId") String groupId) throws IdNotFoundException {   System.out.println("Called Get Group");
         return groupS.getGroupByID(groupId);
     }
+    @CrossOrigin
     @GetMapping(path = "/getGroups/{groupIds}")
     public ArrayList<Group> getAllGroupsFromIds( @PathVariable("groupIds") ArrayList<String> ids) throws IdNotFoundException {
         return groupS.getAllGroupsFromIds(ids);//maybe change the method in the service to return optional variable to add .orElse();
     }
+    @CrossOrigin
     @DeleteMapping(path = "/deleteGroup/{groupId}")
     public void deleteGroupById(@PathVariable("groupId") String groupId)
     {
         groupS.deleteGroupByID(groupId);
     }
+    @CrossOrigin
     @PostMapping(path = "/createGroup/{userId}")
     public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group)
     {
         System.out.println("/Called Create Group");
       return  groupS.createGroup(userId,group);
     }
+    @CrossOrigin
     @PutMapping(path = "/update/{groupId}")
     public void updateGroupById(@PathVariable("groupId") String id, @NonNull @RequestBody Group g)
     {
@@ -50,20 +55,20 @@ public class MainController {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    @CrossOrigin
     @GetMapping(path = "/getChat/{ChatGroupId}")
     public Chat getChatByGroupId(@PathVariable("ChatGroupId") String groupId)
     {
         return groupS.getChatByGroupId(groupId);
     }
-
+    @CrossOrigin
     @GetMapping(path = "/getChat/{chat}")
     public Chat getChat(@PathVariable("chat") String id)
     {
         return groupS.getChat(id);
     }
 
-
+    @CrossOrigin
     @PutMapping(path = "/updateChatById/{chat}")
     public void updateChatById(@PathVariable("chat") String id,@Nonnull @RequestBody Chat c)
     {
@@ -81,24 +86,25 @@ public class MainController {
     }
         return groupS.createNewPosting(groupId,posting);
     }
+    @CrossOrigin
     @GetMapping(path = "/getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
     {
 
         return groupS.getAllPostingsPerGroup(groupId);
     }
-
+    @CrossOrigin
     @GetMapping(path = "/searchByName/{searchName}")
     public List<Group> searchByName(@PathVariable("searchName") String name)
     {
         return groupS.searchByName(name);
     }
-
+    @CrossOrigin
     @GetMapping(path = "/getPostingById/{groupId}/{gPostingId}")
     public Posting getPostingById(@PathVariable("groupId") String id,@PathVariable("gPostingId") String postingId) throws IdNotFoundException {
         return groupS.getPostingByID(id,postingId);
     }
-
+    @CrossOrigin
     @GetMapping(path = "/getPostingsByIds/{groupId}/{gPostingId}")
     public List<Posting> getPostingsByIds(@PathVariable("groupId") String id,@PathVariable("gPostingId") List<String> postingId) throws IdNotFoundException {
         return groupS.getPostingsByIDs(id,postingId);
@@ -115,6 +121,7 @@ public class MainController {
     {
         return groupS.updatePosting(id,posting);
     }
+    @CrossOrigin
     @PostMapping(path = "/acceptTrade/{acceptGroupId}/{acceptPostingId}/{acceptOfferId}")
     public void acceptTrade(@NonNull @PathVariable("acceptGroupId") String groupId,
                             @NonNull @PathVariable("acceptPostingId") String postingId,
@@ -122,7 +129,7 @@ public class MainController {
     {
         groupS.acceptTrade(groupId,postingId,offerId);
     }
-
+    @CrossOrigin
     @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
     public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException {
 
@@ -132,7 +139,7 @@ public class MainController {
         u.getGroups().add(groupID);}
         return b;
     }
-
+    @CrossOrigin
     @GetMapping(path = "/authenticateUser/{username}/{password}")
     public User authenticateUser(@PathVariable("username") String username, @PathVariable("password") String entered_password){
         System.out.println("reached");
@@ -143,6 +150,7 @@ public class MainController {
     public int removeUserById(@PathVariable("groupId") String groupID,@PathVariable("UserId") String userID) throws IdNotFoundException {
         return groupS.removeUserByID(groupID,userID);
     }
+    @CrossOrigin
     @PostMapping(path = "/addNewUser")
     public User addNewUser( @NonNull @RequestBody User user) throws  InvalidNewUserException {
         if(user.getPassword()!=null&&!user.getPassword().equals("")&&user.getUserName()!=null&& !user.getUserName().equals("")){
@@ -179,7 +187,7 @@ public class MainController {
         return userS.getUsersByIDs(id);
     }
 
-
+    @CrossOrigin
     @GetMapping(path = "/findUserByName/{UserName}")
     public List<User> findUserByName(@PathVariable("UserName") String name) {
         return userS.findUserByName(name);
