@@ -71,6 +71,7 @@ public class GroupService {
     }
     //gets all listings in a group where the offerings have not been accepted
     public List<Posting> getAllPostingsPerGroup(String groupID){
+        System.out.println("Getting Postings per Group");
         return gDao.getAllPostingsPerGroup(groupID);
     }
 

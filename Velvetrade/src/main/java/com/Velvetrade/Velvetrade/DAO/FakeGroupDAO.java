@@ -129,12 +129,12 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
     @Override
     public List<Posting> getAllPostingsPerGroup(String id) {
-        Iterable<DocumentReference> ds = FirestoreClient.getFirestore().collection("Groups").document(id).collection("Posting").listDocuments();
+        Iterable<DocumentReference> ds = FirestoreClient.getFirestore().collection("Groups").document(id).collection("Postings").listDocuments();
         ArrayList<Posting> a = new ArrayList();
         for (DocumentReference dr : ds) {
             try {
-                if(dr.get().get().getString("acceptedOfferID").equals("")&&dr.get().get().getBoolean("isOffer")==true){
-                a.add(dr.get().get().toObject(Posting.class));}
+             //  if((dr.get().get().getString("acceptedOfferID")==null||dr.get().get().getString("acceptedOfferID").equals(""))&&dr.get().get().getBoolean("isOffer")==false){
+                a.add(dr.get().get().toObject(Posting.class));//}
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
