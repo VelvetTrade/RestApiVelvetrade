@@ -14,9 +14,9 @@ import java.util.concurrent.ExecutionException;
 
 @Repository("UserDAO")
 public class FakeUserDAO implements UserDAO {
-    @Override
+      @Override
     public int addNewUser(User user) {
-       User u =new User(user.getId(),user.getUserName(),user.getPassword(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline(),user.getFriends(),user.getItemId(),user.getNotifications(),user.getGroups());
+        User u =new User(user.getId(),user.getUserName(),user.getPassword(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline(),user.getFriends(),user.getItemId(),user.getNotifications(),user.getGroups());
         try {
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(user.getId()).set(u);
@@ -41,10 +41,8 @@ public class FakeUserDAO implements UserDAO {
             e.printStackTrace();
         }
 
-
         return o;
     }
-
     @Override
     public User authenticateUser(String username, String password) {
         List<User> users=findUserByName(username);
@@ -60,10 +58,16 @@ public class FakeUserDAO implements UserDAO {
     @Override
     public int updateUserByID(String id,User user) {
         try {
-           User u= getUserByID(id);
-            User e= new User(id,(user.getUserName()==null?u.getUserName():user.getUserName()),(user.getPassword()==null?u.getPassword():user.getPassword()),(user.getEmail()==null?u.getEmail():user.getEmail()),(user.getState()==null?u.getState():user.getState()),
-                    (user.getStreetAddress()==null?u.getStreetAddress():user.getStreetAddress()),(user.getZip()==0?u.getZip():user.getZip()),(user.getTin()==null?u.getTin():user.getTin()),user.isOnline(),
-                    user.getFriends(),user.getItemId(),user.getNotifications(),user.getGroups());
+            User u= getUserByID(id);
+            User e= new User(id,(user.getUserName()==null?u.getUserName():user.getUserName()),
+                    (user.getPassword()==null?u.getPassword():user.getPassword()),
+                    (user.getEmail()==null?u.getEmail():user.getEmail()),
+                    (user.getState()==null?u.getState():user.getState()),
+                    (user.getStreetAddress()==null?u.getStreetAddress():user.getStreetAddress()),
+                    (user.getZip()==0?u.getZip():user.getZip()),
+                    (user.getTin()==null?u.getTin():user.getTin()),user.isOnline(),
+                    user.getFriends(),user.getItemId(),
+                    user.getNotifications(),user.getGroups());
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(id).set(e);
 
@@ -86,24 +90,20 @@ public class FakeUserDAO implements UserDAO {
     }
 
     @Override
-    public User getUserByID(String id) throws IdNotFoundException {
+    public User getUserByID(String id) {
         DocumentReference dr=FirestoreClient.getFirestore().collection("Users").document(id);
         ApiFuture<DocumentSnapshot> future = dr.get();
         try {
             DocumentSnapshot ds=future.get();
             if(ds.exists()){
                 return ds.toObject(User.class);
-            }else{
-                throw new IdNotFoundException();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
-        } catch (IdNotFoundException e) {
-            e.printStackTrace();
         }
-        throw new IdNotFoundException();
+        return null;
     }
 
     @Override
