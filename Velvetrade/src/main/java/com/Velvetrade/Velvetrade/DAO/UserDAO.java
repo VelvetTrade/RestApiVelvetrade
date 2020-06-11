@@ -15,4 +15,6 @@ public interface UserDAO {
     public List<User> findUserByName(String name);
     public List<Posting> getAllPostingsPerUser(String id) throws ExecutionException, InterruptedException;
     public User authenticateUser(String username,String password);
+
+    List<User> getUsersByIDs(List<String> id);
 }
