@@ -11,7 +11,7 @@ public interface GroupDAO {
     public Group getGroupByID(String id) throws IdNotFoundException;
     public int updateGroupByID(String id,Group group);
     public int deleteGroupByID(String id);
-    public Group createGroup(Group group);
+    public Group createGroup(String userId, Group group);
 
     public boolean validateUserEntry(String groupID,String userId,String entered_password) throws IdNotFoundException;
     public int removeUserByID(String groupID,String userID) throws IdNotFoundException;

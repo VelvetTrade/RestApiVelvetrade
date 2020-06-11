@@ -36,11 +36,11 @@ public class MainController {
     {
         groupS.deleteGroupByID(groupId);
     }
-    @PostMapping(path = "/createGroup")
-    public Group createGroup(@NonNull @RequestBody Group group)
+    @PostMapping(path = "/createGroup/{userId}")
+    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group)
     {
         System.out.println("/Called Create Group");
-      return  groupS.createGroup(group);
+      return  groupS.createGroup(userId,group);
     }
     @PutMapping(path = "/update/{groupId}")
     public void updateGroupById(@PathVariable("groupId") String id, @NonNull @RequestBody Group g)
@@ -56,11 +56,14 @@ public class MainController {
     {
         return groupS.getChatByGroupId(groupId);
     }
+
     @GetMapping(path = "/getChat/{chat}")
     public Chat getChat(@PathVariable("chat") String id)
     {
         return groupS.getChat(id);
     }
+
+
     @PutMapping(path = "/updateChatById/{chat}")
     public void updateChatById(@PathVariable("chat") String id,@Nonnull @RequestBody Chat c)
     {
@@ -68,12 +71,13 @@ public class MainController {
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////
+    @CrossOrigin
     @PostMapping(path = "/createNewPosting/{groupId}")
-    public Posting createNewPosting(@NonNull @PathVariable("groupId") String groupId, @NonNull @RequestBody Posting posting) throws IdNotFoundException {       if (posting.isOffer())
-    {
+    public Posting createNewPosting(@NonNull @PathVariable("groupId") String groupId, @NonNull @RequestBody Posting posting) throws IdNotFoundException {
+        if (posting.isOffer()) {
         Posting p = getPostingById(groupId, posting.getAcceptedOfferID());
         p.getOffers().add(posting.getId());
-        updatePosting(p.getId(),p);
+        updatePosting(groupId,p);
     }
         return groupS.createNewPosting(groupId,posting);
     }
@@ -83,14 +87,21 @@ public class MainController {
 
         return groupS.getAllPostingsPerGroup(groupId);
     }
+
     @GetMapping(path = "/searchByName/{searchName}")
     public List<Group> searchByName(@PathVariable("searchName") String name)
     {
         return groupS.searchByName(name);
     }
+
     @GetMapping(path = "/getPostingById/{groupId}/{gPostingId}")
     public Posting getPostingById(@PathVariable("groupId") String id,@PathVariable("gPostingId") String postingId) throws IdNotFoundException {
         return groupS.getPostingByID(id,postingId);
+    }
+
+    @GetMapping(path = "/getPostingsByIds/{groupId}/{gPostingId}")
+    public List<Posting> getPostingsByIds(@PathVariable("groupId") String id,@PathVariable("gPostingId") List<String> postingId) throws IdNotFoundException {
+        return groupS.getPostingsByIDs(id,postingId);
     }
     @CrossOrigin
     @DeleteMapping(path = "/deletePosting/{groupId}/{postingId}")

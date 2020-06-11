@@ -39,9 +39,9 @@ public class GroupService {
     }
 
     //creates group
-    public Group createGroup(Group group){
+    public Group createGroup(String userId, Group group){
 
-      return  gDao.createGroup(group);
+      return  gDao.createGroup(userId,group);
     }
     ///Updates Group by ID
     public void updateGroupByID(String id, Group g){
@@ -108,5 +108,9 @@ public class GroupService {
     //Removes a specific user from a group
     public int removeUserByID(String groupID,String userID) throws IdNotFoundException {
         return gDao.removeUserByID(groupID,userID);
+    }
+
+    public List<Posting> getPostingsByIDs(String id, List<String> postingId) {
+        return gDao.getPostingsByIDs(id,postingId);
     }
 }

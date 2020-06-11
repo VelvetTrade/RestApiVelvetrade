@@ -115,8 +115,9 @@ String current = "";
     }
 
     @Override
-    public Group createGroup(Group group) {
+    public Group createGroup(String userId, Group group) {
         Group gr= new Group(group.getId(),group.getName(),group.getPassword(),group.isPrivate(),group.getDescription(),group.getMembers());
+        gr.getMembers().add(userId);
         ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(gr.getId()).set(gr);
         FirestoreClient.getFirestore().collection("Groups").document(group.getId()).collection("Chat").document().set(new Chat());
 
@@ -188,7 +189,7 @@ String current = "";
         try{
             current = getGroupByID(groupId).getId();
             Posting p = getPostingByID(groupId,current);
-            Posting e = new Posting(groupId,posting.getOffers(),posting.getUserId(),(posting.getPrice()==0?p.getPrice():posting.getPrice()),(posting.getDescription()==null?p.getDescription():posting.getDescription()),(posting.getDesiredItems()==null?p.getDesiredItems():posting.getDesiredItems()), (posting.getItemTitle()==null?p.getItemTitle():posting.getItemTitle()), posting.isOffer(), posting.getAcceptedOfferID());
+            Posting e = new Posting(posting.getId(),posting.getOffers(),posting.getUserId(),(posting.getPrice()==0?p.getPrice():posting.getPrice()),(posting.getDescription()==null?p.getDescription():posting.getDescription()),(posting.getDesiredItems()==null?p.getDesiredItems():posting.getDesiredItems()), (posting.getItemTitle()==null?p.getItemTitle():posting.getItemTitle()), posting.isOffer(), posting.getAcceptedOfferID());
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(e);
         }catch(Exception e)
@@ -205,5 +206,15 @@ String current = "";
         Posting p= new Posting(posting.getId(),posting.getOffers(),posting.getUserId(),posting.getPrice(),posting.getDescription(),posting.getDesiredItems(),posting.getItemTitle(),posting.isOffer(),posting.getAcceptedOfferID());
         FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(p);
         return p;
+    }
+
+    public List<Posting> getPostingsByIDs(String sid, List<String> postingId) {
+        List<Posting> p= new ArrayList<Posting>();
+
+        for(String id:postingId){
+           p.add(getPostingByID(sid,id));
+        }
+        return p;
+
     }
 }
