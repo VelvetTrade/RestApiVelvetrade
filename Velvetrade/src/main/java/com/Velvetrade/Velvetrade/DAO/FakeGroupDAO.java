@@ -130,7 +130,7 @@ String current = "";
         if(!g.isPrivate()||g.getPassword()==entered_password){
             g.getMembers().add(userId);
             updateGroupByID(groupID,g);}
-        return g.getPassword()==entered_password;
+        return !g.isPrivate()||g.getPassword()==entered_password;
     }
 
     @Override
