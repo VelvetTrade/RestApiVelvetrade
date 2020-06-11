@@ -11,10 +11,9 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/api/v1/trade")
 @RestController
-@CrossOrigin(origins = "*")
 public class MainController {
     private final GroupService groupS;
     private final UserService userS;
