@@ -2,7 +2,6 @@ package com.Velvetrade.Velvetrade.DAO;
 
 import com.Velvetrade.Velvetrade.Model.Chat;
 import com.Velvetrade.Velvetrade.Model.Group;
-import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 import com.Velvetrade.Velvetrade.Model.Posting;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;

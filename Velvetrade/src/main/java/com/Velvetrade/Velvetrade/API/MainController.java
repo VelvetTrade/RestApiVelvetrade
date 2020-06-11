@@ -117,8 +117,11 @@ public class MainController {
         return groupS.removeUserByID(groupID,userID);
     }
     @PostMapping(path = "/addNewUser")
-    public int addNewUser( @NonNull @RequestBody User user) {
-        return userS.addNewUser(user);
+    public int addNewUser( @NonNull @RequestBody User user) throws  InvalidNewUserException {
+        if(user.getPassword()!=null&&!user.getPassword().equals("")&&user.getUserName()!=null&& !user.getUserName().equals("")){
+        return userS.addNewUser(user);}else{
+            throw new InvalidNewUserException();
+        }
     }
 
     @PutMapping(path = "/updateUserById/{updateUserId}")

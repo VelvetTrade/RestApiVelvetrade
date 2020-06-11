@@ -1,6 +1,5 @@
 package com.Velvetrade.Velvetrade.DAO;
 
-import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
 import com.Velvetrade.Velvetrade.Model.Posting;
 import com.Velvetrade.Velvetrade.Model.User;
 import com.google.api.core.ApiFuture;
