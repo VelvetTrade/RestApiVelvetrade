@@ -96,7 +96,7 @@ String current = "";
             Group g = getGroupByID(id);
             Group e = new Group(id,(group.getName()==null?g.getName():group.getName()),
                     (group.getPassword()==null?g.getPassword():group.getPassword()),
-                    group.isPrivate(),(group.getDescription()==null?g.getPassword():group.getPassword()),
+                    group.isIsPrivate(),(group.getDescription()==null?g.getPassword():group.getPassword()),
                     (group.getMembers()==null?g.getMembers():group.getMembers()));
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Groups").document(id).set(e);
@@ -116,7 +116,7 @@ String current = "";
 
     @Override
     public Group createGroup(String userId, Group group) {
-        Group gr= new Group(group.getId(),group.getName(),group.getPassword(),group.isPrivate(),group.getDescription(),group.getMembers());
+        Group gr= new Group(group.getId(),group.getName(),group.getPassword(),group.isIsPrivate(),group.getDescription(),group.getMembers());
         gr.getMembers().add(userId);
         ApiFuture<WriteResult> ds = FirestoreClient.getFirestore().collection("Groups").document(gr.getId()).set(gr);
         FirestoreClient.getFirestore().collection("Groups").document(group.getId()).collection("Chat").document().set(new Chat());
@@ -127,10 +127,10 @@ String current = "";
     @Override
     public boolean validateUserEntry(String groupID,String userId ,String entered_password) {
         Group g=getGroupByID(groupID);
-        if(!g.isPrivate()||g.getPassword().equals(entered_password)){
+        if(!g.isIsPrivate()||g.getPassword().equals(entered_password)){
             g.getMembers().add(userId);
             updateGroupByID(groupID,g);}
-        return !g.isPrivate()||g.getPassword().equals(entered_password);
+        return !g.isIsPrivate()||g.getPassword().equals(entered_password);
     }
 
     @Override
