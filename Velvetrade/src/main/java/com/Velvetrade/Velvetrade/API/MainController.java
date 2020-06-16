@@ -40,18 +40,18 @@ public class MainController {
     }
     @CrossOrigin
     @PostMapping(path = "/createGroup/{userId}/{password}")
-    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group,@PathVariable("userId") String password) throws IdNotFoundException {
+    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group,@PathVariable("password") String password) throws IdNotFoundException, InterruptedException, ExecutionException, InvalidNewUserException {
         System.out.println("/Called Create Group");
         User u=getUserById(userId);
-       Group g=groupS.createGroup(userId,group);
+       Group g=groupS.createGroup(userId,group,password);
         u.getGroups().add(g.getId());
       return g;
     }
     @PostMapping(path = "/createGroup/{userId}/")
-    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group) throws IdNotFoundException {
+    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group) throws IdNotFoundException, InterruptedException, ExecutionException, InvalidNewUserException {
         System.out.println("/Called Create Group");
         User u=getUserById(userId);
-        Group g=groupS.createGroup(userId,group);
+        Group g=groupS.createGroup(userId,group,null);
         u.getGroups().add(g.getId());
         return g;
     }
@@ -140,7 +140,7 @@ public class MainController {
     }
     @CrossOrigin
     @GetMapping(path = "/validateUserEntry/{groupId}/{userId}/{validatePass}")
-    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException, InvalidNewUserException {
+    public boolean validateUserEntry(@PathVariable("groupId") String groupID,@PathVariable("userId") String userID, @PathVariable("validatePass") String entered_password) throws IdNotFoundException, InvalidNewUserException, ExecutionException, InterruptedException {
 
         boolean b= groupS.validateUserEntry(groupID,userID,entered_password);
         if(b){
@@ -151,7 +151,7 @@ public class MainController {
     }
     @CrossOrigin
     @GetMapping(path = "/authenticateUser/{username}/{password}")
-    public User authenticateUser(@PathVariable("username") String username, @PathVariable("password") String entered_password){
+    public User authenticateUser(@PathVariable("username") String username, @PathVariable("password") String entered_password) throws InterruptedException, ExecutionException, AuthIsIncorrect {
         System.out.println("reached");
         return userS.authenticateUser(username,entered_password);
     }
@@ -164,10 +164,10 @@ public class MainController {
         return groupS.removeUserByID(groupID,userID);
     }
     @CrossOrigin
-    @PostMapping(path = "/addNewUser")
-    public User addNewUser( @NonNull @RequestBody User user) throws  InvalidNewUserException {
-        if(user.getPassword()!=null&&!user.getPassword().equals("")&&user.getUserName()!=null&& !user.getUserName().equals("")){
-        return userS.addNewUser(user);}else{
+    @PostMapping(path = "/addNewUser/{password}")
+    public User addNewUser( @NonNull @RequestBody User user,@PathVariable("password") String password) throws InvalidNewUserException, ExecutionException, InterruptedException {
+        if(password!=null&&password.equals("")&&user.getUserName()!=null&& !user.getUserName().equals("")){
+        return userS.addNewUser(user,password);}else{
             throw new InvalidNewUserException();
         }
     }

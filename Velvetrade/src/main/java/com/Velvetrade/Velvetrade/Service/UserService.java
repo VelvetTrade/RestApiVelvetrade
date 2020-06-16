@@ -1,9 +1,7 @@
 package com.Velvetrade.Velvetrade.Service;
 
 import com.Velvetrade.Velvetrade.DAO.FakeUserDAO;
-import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
-import com.Velvetrade.Velvetrade.Model.Posting;
-import com.Velvetrade.Velvetrade.Model.User;
+import com.Velvetrade.Velvetrade.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,8 +20,8 @@ public class UserService {
     }
 
     //Adds a user
-    public User addNewUser(User user) {
-        return fDAO.addNewUser(user);
+    public User addNewUser(User user,String password) throws InterruptedException, ExecutionException, InvalidNewUserException {
+        return fDAO.addNewUser(user,password);
 
     }
     //gets all the postings of a user
@@ -31,7 +29,7 @@ public class UserService {
         return fDAO.getAllPostingsPerUser(id);
     }
 
-    public User authenticateUser(String username,String password){
+    public User authenticateUser(String username,String password) throws InterruptedException, ExecutionException, AuthIsIncorrect {
         System.out.println("reached 2");
         return fDAO.authenticateUser(username,password);
     }

@@ -1,16 +1,14 @@
 package com.Velvetrade.Velvetrade.Service;
 
 import com.Velvetrade.Velvetrade.DAO.FakeGroupDAO;
-import com.Velvetrade.Velvetrade.Model.Chat;
-import com.Velvetrade.Velvetrade.Model.Group;
-import com.Velvetrade.Velvetrade.Model.IdNotFoundException;
-import com.Velvetrade.Velvetrade.Model.Posting;
+import com.Velvetrade.Velvetrade.Model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class GroupService {
@@ -39,9 +37,9 @@ public class GroupService {
     }
 
     //creates group
-    public Group createGroup(String userId, Group group){
+    public Group createGroup(String userId, Group group,String password) throws InterruptedException, ExecutionException, InvalidNewUserException {
 
-      return  gDao.createGroup(userId,group);
+      return  gDao.createGroup(userId,group,password);
     }
     ///Updates Group by ID
     public void updateGroupByID(String id, Group g){
@@ -102,7 +100,7 @@ public class GroupService {
     }
 
     //Validates if a User can enter a group
-    public boolean validateUserEntry(String groupId, String userId, String entered_password) throws IdNotFoundException {
+    public boolean validateUserEntry(String groupId, String userId, String entered_password) throws IdNotFoundException, ExecutionException, InterruptedException {
 
         return gDao.validateUserEntry(groupId,userId,entered_password);
     }
