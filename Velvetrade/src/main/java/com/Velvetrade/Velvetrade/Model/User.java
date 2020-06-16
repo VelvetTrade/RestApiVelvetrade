@@ -12,7 +12,7 @@ public class User {
     //can be blank
     private String email;
 
-    private String password;
+
     //the following can be blank if the user hasn't put in the info
     private String state;
     private String streetAddress;
@@ -31,12 +31,6 @@ public class User {
     //All group ids
     private ArrayList<String> groups;
 
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
 //    public User(@JsonProperty("username") String userName,@JsonProperty("password") String password ,@JsonProperty("email") String email, @JsonProperty("state") String state, @JsonProperty("streetAddress") String streetAddress, @JsonProperty("zip") int zip, @JsonProperty("tin") String tin, @JsonProperty("online") boolean online) {
 //        this.userName = userName;
@@ -60,7 +54,7 @@ public class User {
 
     public User(@JsonProperty("id") String id,
                 @JsonProperty("username") String userName,
-                @JsonProperty("password") String password ,
+
                 @JsonProperty("email") String email,
                 @JsonProperty("state") String state,
                 @JsonProperty("streetAddress") String streetAddress,
@@ -106,10 +100,7 @@ public class User {
         {
             this.userName = userName;
         }
-        if(password!=null)
-        {
-            this.password = password;
-        }
+
         if(email!=null)
         {
             this.email = email;

@@ -1,12 +1,13 @@
 package com.Velvetrade.Velvetrade.DAO;
 
-import com.Velvetrade.Velvetrade.Model.Posting;
-import com.Velvetrade.Velvetrade.Model.User;
+import com.Velvetrade.Velvetrade.Model.*;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.common.hash.Hashing;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Repository;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -14,11 +15,17 @@ import java.util.concurrent.ExecutionException;
 @Repository("UserDAO")
 public class FakeUserDAO implements UserDAO {
       @Override
-    public User addNewUser(User user) {
-        User u =new User(user.getId(),user.getUserName(),user.getPassword(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline(),user.getFriends(),user.getItemId(),user.getNotifications(),user.getGroups());
+    public User addNewUser(User user,String password) throws ExecutionException, InterruptedException, InvalidNewUserException {
+        User u =new User(user.getId(),user.getUserName(),user.getEmail(),user.getState(),user.getStreetAddress(),user.getZip(),user.getTin(),user.isOnline(),user.getFriends(),user.getItemId(),user.getNotifications(),user.getGroups());
+           if(!checkIfUserNameExists(user.getUserName())){
+               throw new InvalidNewUserException();
+           }
+
         try {
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Users").document(user.getId()).set(u);
+            createStorage(new Storage(u.getId(), Hashing.sha256().hashString(password,StandardCharsets.US_ASCII).toString(),u.getUserName()));
+
         }catch (Exception e){
             return null;
         }
@@ -37,15 +44,15 @@ public class FakeUserDAO implements UserDAO {
         return l;
     }
     @Override
-    public User authenticateUser(String username, String password) {
+    public User authenticateUser(String username, String password) throws ExecutionException, InterruptedException, AuthIsIncorrect {
         List<User> users=findUserByName(username);
-        for(User user:users){
-            if(user.getPassword().equals(password)){
-                System.out.println("user password "+user.getPassword()+" "+password);
-                return user;
-            }
-        }
-        return null;
+       User user=users.get(0);
+       String p= Hashing.sha256().hashString(password, StandardCharsets.US_ASCII).toString();
+       String pa= (String) FirestoreClient.getFirestore().collection("uStore").document(user.getId()).get().get().get("p");
+      if(pa==null&&!p.equals(pa)){
+          throw new AuthIsIncorrect();
+      }
+        return user;
     }
 
     @Override
@@ -53,7 +60,6 @@ public class FakeUserDAO implements UserDAO {
         try {
             User u= getUserByID(id);
             User e= new User(id,(user.getUserName()==null?u.getUserName():user.getUserName()),
-                    (user.getPassword()==null?u.getPassword():user.getPassword()),
                     (user.getEmail()==null?u.getEmail():user.getEmail()),
                     (user.getState()==null?u.getState():user.getState()),
                     (user.getStreetAddress()==null?u.getStreetAddress():user.getStreetAddress()),
@@ -115,6 +121,13 @@ public class FakeUserDAO implements UserDAO {
             e.printStackTrace();
         }
         return users;
+    }
+    public void createStorage(Storage s){
+        FirestoreClient.getFirestore().collection("uStore").add(s);
+    }
+    @Override
+    public boolean checkIfUserNameExists(String s) throws ExecutionException, InterruptedException {
+        return  FirestoreClient.getFirestore().collection("uStore").whereEqualTo("name",s).get().get().size()>0;
     }
     @Override
     public List<User> getUsersByIDs(List<String> id) {

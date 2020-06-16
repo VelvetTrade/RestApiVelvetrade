@@ -39,13 +39,21 @@ public class MainController {
         groupS.deleteGroupByID(groupId);
     }
     @CrossOrigin
-    @PostMapping(path = "/createGroup/{userId}")
-    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group) throws IdNotFoundException {
+    @PostMapping(path = "/createGroup/{userId}/{password}")
+    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group,@PathVariable("userId") String password) throws IdNotFoundException {
         System.out.println("/Called Create Group");
         User u=getUserById(userId);
        Group g=groupS.createGroup(userId,group);
         u.getGroups().add(g.getId());
       return g;
+    }
+    @PostMapping(path = "/createGroup/{userId}/")
+    public Group createGroup(@PathVariable("userId") String userId,@NonNull @RequestBody Group group) throws IdNotFoundException {
+        System.out.println("/Called Create Group");
+        User u=getUserById(userId);
+        Group g=groupS.createGroup(userId,group);
+        u.getGroups().add(g.getId());
+        return g;
     }
     @CrossOrigin
     @PutMapping(path = "/update/{groupId}")

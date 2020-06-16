@@ -11,8 +11,7 @@ public class Group {
     private String id;
 
     private String name;
-    //will be encrypted or have none at all
-    private String password;
+
     //determines if the group is locked under a password
     private boolean isPrivate;
 
@@ -53,13 +52,7 @@ public class Group {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public boolean isIsPrivate() {
         return isPrivate;
@@ -77,9 +70,8 @@ public class Group {
         this.description = description;
     }
 
-    public Group(@JsonProperty("id")String id,@JsonProperty("name")String name, @JsonProperty("password") String password, @JsonProperty("isIsPrivate")boolean isPrivate, @JsonProperty("description") String description, @JsonProperty("members")List<String> members) {
+    public Group(@JsonProperty("id")String id,@JsonProperty("name")String name, @JsonProperty("isIsPrivate")boolean isPrivate, @JsonProperty("description") String description, @JsonProperty("members")List<String> members) {
         this.name = name;
-        this.password = password;
         this.isPrivate = isPrivate;
         this.description = description;
         if(id==null||id.equals("")){
@@ -93,10 +85,10 @@ public class Group {
     public Group(){
 
     }
-    public Group(String id, String name, String password, boolean isPrivate, String description) {
+    public Group(String id, String name, boolean isPrivate, String description) {
         this.id = id;
         this.name = name;
-        this.password = password;
+
         this.isPrivate = isPrivate;
 
         this.description = description;
