@@ -33,14 +33,19 @@ public class FakeUserDAO implements UserDAO {
     }
 
     @Override
+    public Posting createPosting(String userId, Posting posting) {
+        Posting p = new Posting(posting.getId(), posting.getOffers(), posting.getUserId(), posting.getPrice(), posting.getDescription(), posting.getDesiredItems(), posting.getItemTitle(), posting.isOffer(), posting.getAcceptedOfferID(),posting.getImages());
+        FirestoreClient.getFirestore().collection("Users").document(userId).collection("Postings").document(posting.getId()).set(p);
+        return p;
+    }
+
+    @Override
     public List<Posting> getAllPostingsPerUser(String id) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        User u=getUserByID(id);
+
         List<Posting> l= new ArrayList<>();
-        for(String ids:u.getGroups()){
-            l.addAll( dbFirestore.collection("Groups").document(ids).collection("Postings").
-                    whereEqualTo("userId",id).get().get().toObjects(Posting.class));
-        }
+            l.addAll( dbFirestore.collection("Users").document(id).collection("Postings").get().get().toObjects(Posting.class));
+
         return l;
     }
     @Override
@@ -137,5 +142,27 @@ public class FakeUserDAO implements UserDAO {
 
           }
           return u;
+    }
+
+    @Override
+    public void  removeUserPostingById(String userId, String postingId){
+        FirestoreClient.getFirestore().collection("Users").document(userId).collection("Posting").document(postingId).delete();
+    }
+
+    @Override
+    public void  updateUserPostingById(String userId,String postingId,Posting posting) throws ExecutionException, InterruptedException {
+        Posting p = getUserPostingById(userId,postingId);
+        Posting e = new Posting(postingId, posting.getOffers(), userId, (posting.getPrice() == 0 ? p.getPrice() : posting.getPrice()), (posting.getDescription() == null ? p.getDescription() : posting.getDescription()), (posting.getDesiredItems() == null ? p.getDesiredItems() : posting.getDesiredItems()), (posting.getItemTitle() == null ? p.getItemTitle() : posting.getItemTitle()), posting.isOffer(), posting.getAcceptedOfferID(),posting.getImages());
+
+        FirestoreClient.getFirestore().collection("Users").document(userId).collection("Posting").document(p.getId()).set(p);
+    }
+    public Posting  getUserPostingById(String userId,String postingId ) throws ExecutionException, InterruptedException {
+        return  FirestoreClient.getFirestore().collection("Users").document(userId).collection("Posting").document(postingId).get().get().toObject(Posting.class);
+
+    }
+    @Override
+    public List<Posting>  getUserPostingsByName(String userId,String item ) throws ExecutionException, InterruptedException {
+        return  FirestoreClient.getFirestore().collection("Users").document(userId).collection("Posting").whereEqualTo("itemTitle",item).get().get().toObjects(Posting.class);
+
     }
 }

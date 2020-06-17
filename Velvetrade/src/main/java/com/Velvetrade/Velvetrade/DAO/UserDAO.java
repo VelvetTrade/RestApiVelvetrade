@@ -16,4 +16,9 @@ public interface UserDAO {
     public boolean checkIfUserNameExists(String s) throws ExecutionException, InterruptedException;
     List<User> getUsersByIDs(List<String> id);
     public void createStorage(Storage s);
+    public Posting createPosting(String userId, Posting posting);
+    public void  removeUserPostingById(String userId, String postingId);
+    public void  updateUserPostingById(String userId, String postingId,Posting p) throws ExecutionException, InterruptedException;
+    public Posting  getUserPostingById(String userId,String postingId ) throws ExecutionException, InterruptedException;
+    public List<Posting>  getUserPostingsByName(String userId,String item ) throws ExecutionException, InterruptedException;
 }

@@ -208,7 +208,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
         try {
             current = getGroupByID(groupId).getId();
             Posting p = getPostingByID(groupId, current);
-            Posting e = new Posting(posting.getId(), posting.getOffers(), posting.getUserId(), (posting.getPrice() == 0 ? p.getPrice() : posting.getPrice()), (posting.getDescription() == null ? p.getDescription() : posting.getDescription()), (posting.getDesiredItems() == null ? p.getDesiredItems() : posting.getDesiredItems()), (posting.getItemTitle() == null ? p.getItemTitle() : posting.getItemTitle()), posting.isOffer(), posting.getAcceptedOfferID());
+            Posting e = new Posting(posting.getId(), posting.getOffers(), posting.getUserId(), (posting.getPrice() == 0 ? p.getPrice() : posting.getPrice()), (posting.getDescription() == null ? p.getDescription() : posting.getDescription()), (posting.getDesiredItems() == null ? p.getDesiredItems() : posting.getDesiredItems()), (posting.getItemTitle() == null ? p.getItemTitle() : posting.getItemTitle()), posting.isOffer(), posting.getAcceptedOfferID(),posting.getImages());
             Firestore dbFirestore = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> ndoc = dbFirestore.collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(e);
         } catch (Exception e) {
@@ -221,7 +221,7 @@ public class FakeGroupDAO implements ChatDAO, GroupDAO, PostingDAO {
 
     @Override
     public Posting createPosting(String groupId, Posting posting) {
-        Posting p = new Posting(posting.getId(), posting.getOffers(), posting.getUserId(), posting.getPrice(), posting.getDescription(), posting.getDesiredItems(), posting.getItemTitle(), posting.isOffer(), posting.getAcceptedOfferID());
+        Posting p = new Posting(posting.getId(), posting.getOffers(), posting.getUserId(), posting.getPrice(), posting.getDescription(), posting.getDesiredItems(), posting.getItemTitle(), posting.isOffer(), posting.getAcceptedOfferID(),posting.getImages());
         FirestoreClient.getFirestore().collection("Groups").document(groupId).collection("Postings").document(posting.getId()).set(p);
         return p;
     }

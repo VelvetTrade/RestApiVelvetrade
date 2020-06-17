@@ -95,6 +95,13 @@ public class MainController {
     }
         return groupS.createNewPosting(groupId,posting);
     }
+
+    @CrossOrigin
+    @PostMapping(path = "/createNewUserPosting/{userId}")
+    public Posting createNewUserPosting(@NonNull @PathVariable("userId") String userId, @NonNull @RequestBody Posting posting) throws IdNotFoundException {
+
+        return userS.addNewPostingToUser(userId,posting);
+    }
     @CrossOrigin
     @GetMapping(path = "/getAllPostingPerGroup/{PostGroupId}")
     public List<Posting> getAllPostingsPerGroup(@PathVariable("PostGroupId") String groupId)
@@ -114,10 +121,23 @@ public class MainController {
         return groupS.getPostingByID(id,postingId);
     }
     @CrossOrigin
+    @GetMapping(path = "/getUserPostingById/{userId}/{uPostingId}")
+    public Posting getUserPostingById(@PathVariable("userId") String id,@PathVariable("uPostingId") String postingId) throws IdNotFoundException, ExecutionException, InterruptedException {
+        return userS.getUserPostingById(id,postingId);
+    }
+    @CrossOrigin
+    @GetMapping(path = "/getUserPostingById/{userId}/{name}")
+    public List<Posting> getUserPostingByName(@PathVariable("userId") String id,@PathVariable("name") String name) throws IdNotFoundException, ExecutionException, InterruptedException {
+        return userS.getUserPostingByName(id,name);
+    }
+
+
+    @CrossOrigin
     @GetMapping(path = "/getPostingsByIds/{groupId}/{gPostingId}")
     public List<Posting> getPostingsByIds(@PathVariable("groupId") String id,@PathVariable("gPostingId") List<String> postingId) throws IdNotFoundException {
         return groupS.getPostingsByIDs(id,postingId);
     }
+
     @CrossOrigin
     @DeleteMapping(path = "/deletePosting/{groupId}/{postingId}")
     public int deletePosting(@PathVariable("groupId") String id,@PathVariable("postingId") String postingId)
@@ -125,11 +145,23 @@ public class MainController {
         return groupS.deletePosting(id,postingId);
     }
     @CrossOrigin
+    @DeleteMapping(path = "/deleteUserPosting/{userId}/{postingId}")
+    public void deleteUserPosting(@PathVariable("userId") String id,@PathVariable("postingId") String postingId)
+    {
+         userS.removeUserPostingById(id,postingId);
+    }
+    @CrossOrigin
     @PutMapping(path = "/updatePosting/{updatePostingId}")
     public int updatePosting(@PathVariable("updatePostingId") String id,@NonNull  @RequestBody Posting posting)
     {
         return groupS.updatePosting(id,posting);
     }
+    @CrossOrigin
+    @PutMapping(path = "/updateUserPosting/{userId}/{postingId}")
+    public void updateUserPosting(@PathVariable("userId") String userid,@PathVariable("postingId") String postingId ,@NonNull  @RequestBody Posting posting) throws ExecutionException, InterruptedException {
+        userS.updateUserPostingById(userid,postingId,posting);
+    }
+
     @CrossOrigin
     @PostMapping(path = "/acceptTrade/{acceptGroupId}/{acceptPostingId}/{acceptOfferId}")
     public void acceptTrade(@NonNull @PathVariable("acceptGroupId") String groupId,

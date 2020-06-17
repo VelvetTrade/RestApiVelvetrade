@@ -58,5 +58,20 @@ public class UserService {
     public List<User> getUsersByIDs(List<String> id) {
         return fDAO.getUsersByIDs(id);
     }
+    public Posting addNewPostingToUser(String userId,Posting p){return fDAO.createPosting(userId,p);}
+    public Posting getUserPostingById(String userId,String postingId) throws ExecutionException, InterruptedException {
+        return fDAO.getUserPostingById(userId,postingId);
+    }
+    public List<Posting> getUserPostingByName(String userId,String name) throws ExecutionException, InterruptedException {
+        return fDAO.getUserPostingsByName(userId,name);
+    }
+
+    public void updateUserPostingById(String userId,String postingId, Posting posting) throws ExecutionException, InterruptedException {
+        fDAO.updateUserPostingById(userId,postingId,posting);
+    }
+    public void removeUserPostingById(String userId,String postingId){
+        fDAO.removeUserPostingById(userId,postingId);
+    }
+
 }
 

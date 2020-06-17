@@ -16,6 +16,7 @@ public class Posting {
     // will be blank if not accepted
     private String acceptedOfferID;
     //U.S dollars
+
     private double price;
 
     private String description;
@@ -23,23 +24,31 @@ public class Posting {
     private String desiredItems;
 
     private String itemTitle;
+    private List<String> images;
     //if the posting is an offer instead of a listing
     private boolean isOffer;
-    public Posting(){
+
+    public Posting() {
 
     }
 
-    public Posting(@JsonProperty("id") String id, @JsonProperty("offers") List<String> offers, @JsonProperty("userId")String userId, @JsonProperty("price") double price, @JsonProperty("description") String description, @JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle")String itemTitle, @JsonProperty("isOffer") boolean isOffer, @JsonProperty("acceptedOfferId")String acceptedOfferID) {
-        if(id==null){
-            id=UUID.randomUUID().toString();
+    public Posting(@JsonProperty("id") String id, @JsonProperty("offers") List<String> offers, @JsonProperty("userId") String userId, @JsonProperty("price") double price, @JsonProperty("description") String description, @JsonProperty("desiredItems") String desiredItems, @JsonProperty("itemTitle") String itemTitle, @JsonProperty("isOffer") boolean isOffer, @JsonProperty("acceptedOfferId") String acceptedOfferID, @JsonProperty("images") List<String> images) {
+        if (id == null) {
+            id = UUID.randomUUID().toString();
         }
-        if(offers==null){
-            offers=new ArrayList<String>();
+        if (offers == null) {
+            offers = new ArrayList<String>();
         }
-        if(acceptedOfferID==null){
-            acceptedOfferID="";
+        if (acceptedOfferID == null) {
+            acceptedOfferID = "";
         }
-
+        if (images == null) {
+            images = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                images.add(UUID.randomUUID().toString());
+            }
+        }
+        this.images = images;
         this.id = id;
         this.userId = userId;
         this.offers = (ArrayList<String>) offers;
@@ -47,8 +56,8 @@ public class Posting {
         this.description = description;
         this.desiredItems = desiredItems;
         this.itemTitle = itemTitle;
-        this.isOffer=isOffer;
-        this.acceptedOfferID =acceptedOfferID;
+        this.isOffer = isOffer;
+        this.acceptedOfferID = acceptedOfferID;
     }
 
     public boolean isOffer() {
@@ -101,6 +110,14 @@ public class Posting {
 
     public void setOffers(ArrayList<String> offers) {
         this.offers = offers;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 
     public double getPrice() {
